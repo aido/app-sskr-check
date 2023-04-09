@@ -1,5 +1,15 @@
 # Change log
 
+## [1.2.1] - 2023-04-08
+### Added
+-  Added some manual tests
+
+### Changed
+-
+
+### Fixed
+-
+
 ## [1.1.1] - 2023-04-06
 ### Added
 -

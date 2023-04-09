@@ -402,7 +402,6 @@ POST /button/right
 POST /button/both
 POST /button/right
 POST /button/both
-# end of phrase 1
 POST /button/both
 POST /button/left
 POST /button/left

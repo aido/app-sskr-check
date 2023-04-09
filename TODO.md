@@ -10,6 +10,7 @@
 ### In Progress
 
 - [ ] Currently hardcoded to use a k-of-n threshold of 2-of-3. Add flow to set threshold values
+- [ ] Add automated tests
 
 ### Done ✓
 
