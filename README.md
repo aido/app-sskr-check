@@ -32,6 +32,25 @@ Not all Ledger devices are equal. The older, less capable devices do not have th
 |[Generate BIP85](#generate-bip85)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
 </div>
 
+## Installation
+
+Following these installation instructions will allow you to install & develop this app.
+
+Make sure to not skip over any step.
+
+1. If on MacOS/Windows, install [Docker Desktop](https://www.docker.com/products/docker-desktop/)
+2. Install [Visual Studio Code (VSCode)](https://code.visualstudio.com/)
+3. Clone the repository
+4. Open the repository in VSCode
+5. Intall the [Ledger Dev Tools](https://marketplace.visualstudio.com/items?itemName=LedgerHQ.ledger-dev-tools) VSCode extension
+6. For MacOS/Windows, a terminal window will open with the Docker image's download progress. Wait until it's done before proceeding further.
+7. Go to the Ledger Dev Tool panel on the left
+8. Pick the right target device through the `Select target \[Nano S\]` menu item
+9. Click `Build`
+10. Connect your Ledger device to your computer, unlock it, and then, click `Load app on device`
+11. Accept everything on the Ledger device
+12. Done!
+
 ## Check BIP39
 The application invites the user to type a [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonic on their Ledger device. The BIP-39 mnemonic is compared to the onboarded seed and the application notifies the user whether both seeds match or not.
 
