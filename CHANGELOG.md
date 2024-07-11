@@ -12,6 +12,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Add Stax layouts for generating SSKR shares
 - Add Stax layouts for checking SSKR shares
 - Add Stax layouts for recovering BIP39 phrase
+- Add screenshots and animations
 
 ## [1.7.4] - 2024-06-20
 
@@ -25,6 +26,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 ## [1.7.3] - 2024-05-29
 
 ### Fixed
+
 - Changed name of 'Generate BIP39' menus to 'Recover BIP39'
 - Changed Second Montgomery constant used for `cx_bn_gf2_n_mul()` to a more suitable value
 - Improve efficiency of `cx_bn_gf2_n_mul()` for Nano S

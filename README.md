@@ -72,6 +72,7 @@ flowchart LR
         4.1[Quit]
     end
 ```
+Animations of some of the menu flows on different hardware devices are available [here](tests/functional/screenshots/README.md).
 
 ## Check BIP39
 The application invites the user to type a [BIP-39](https://github.com/bitcoin/bips/blob/master/bip-0039.mediawiki) mnemonic on their Ledger device. The BIP-39 mnemonic is compared to the onboarded seed and the application notifies the user whether both seeds match or not.
