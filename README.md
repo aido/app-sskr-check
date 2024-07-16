@@ -6,9 +6,10 @@
 [![License](https://img.shields.io/github/license/aido/app-seed-tool)](https://github.com/aido/app-seed-tool/blob/develop/LICENSE)
 
 ![nanos](https://img.shields.io/badge/nanos-working-green?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
-![nanox](https://img.shields.io/badge/nanox-working-green?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
 ![nanosp](https://img.shields.io/badge/nanosp-working-green?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
+![nanox](https://img.shields.io/badge/nanox-working-green?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
 ![stax](https://img.shields.io/badge/stax-in_progress-orange?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
+![flex](https://img.shields.io/badge/flex-in_progress-orange?logo=data:image/svg%2bxml;base64,PHN2ZyB3aWR0aD0iMTQ3IiBoZWlnaHQ9IjEyOCIgdmlld0JveD0iMCAwIDE0NyAxMjgiIGZpbGw9Im5vbmUiIHhtbG5zPSJodHRwOi8vd3d3LnczLm9yZy8yMDAwL3N2ZyI+PHBhdGggZD0iTTAgOTEuNjU0OFYxMjhINTUuMjkzVjExOS45NEg4LjA1NjMxVjkxLjY1NDhIMFpNMTM4Ljk0NCA5MS42NTQ4VjExOS45NEg5MS43MDdWMTI3Ljk5OEgxNDdWOTEuNjU0OEgxMzguOTQ0Wk01NS4zNzMzIDM2LjM0NTJWOTEuNjUyOUg5MS43MDdWODQuMzg0Mkg2My40Mjk2VjM2LjM0NTJINTUuMzczM1pNMCAwVjM2LjM0NTJIOC4wNTYzMVY4LjA1ODQ0SDU1LjI5M1YwSDBaTTkxLjcwNyAwVjguMDU4NDRIMTM4Ljk0NFYzNi4zNDUySDE0N1YwSDkxLjcwN1oiIGZpbGw9IndoaXRlIi8+PC9zdmc+)
 
 [![Build app-seed-tool](https://github.com/aido/app-seed-tool/actions/workflows/ci-workflow.yml/badge.svg)](https://github.com/aido/app-seed-tool/actions/workflows/ci-workflow.yml)
 [![CodeQL](https://github.com/aido/app-seed-tool/actions/workflows/codeql-workflow.yml/badge.svg)](https://github.com/aido/app-seed-tool/actions/workflows/codeql-workflow.yml)
@@ -23,13 +24,13 @@ Use the utilities provided by this Ledger application to check a backed up BIP-3
 Not all Ledger devices are equal. The older, less capable devices do not have the capacity to provide a full range of seed utilities. The following table lists the seed utilities provided by each devices type:
 <div align="center">
 
-||Nano S|Nano S+|Nano X|Stax|
-| :--- | :---: | :---: | :---: | :---: |
-|[Check BIP39](#check-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|
-|[Check Shamir's secret shares](#check-shamirs-secret-shares)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
-|[Generate Shamir's secret sharing](#generate-shamirs-secret-sharing)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
-|[Recover BIP39](#recover-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
-|[Generate BIP85](#generate-bip85)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+||Nano S|Nano S+|Nano X|Stax|Flex|
+| :--- | :---: | :---: | :---: | :---: | :---: |
+|[Check BIP39](#check-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
+|[Check Shamir's secret shares](#check-shamirs-secret-shares)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[Generate Shamir's secret sharing](#generate-shamirs-secret-sharing)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
+|[Recover BIP39](#recover-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[Generate BIP85](#generate-bip85)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
 </div>
 
 ## Application menu flow

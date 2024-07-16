@@ -35,13 +35,13 @@ const char* number_of_bip39_words_getter(unsigned int idx) {
 void number_of_bip39_words_selector(unsigned int idx) {
     switch (idx) {
         case 0:
-            G_bolos_ux_context.onboarding_kind = MNEMONIC_SIZE_12;
+            G_bolos_ux_context.onboarding_kind = BIP39_MNEMONIC_SIZE_12;
             goto word_init;
         case 1:
-            G_bolos_ux_context.onboarding_kind = MNEMONIC_SIZE_18;
+            G_bolos_ux_context.onboarding_kind = BIP39_MNEMONIC_SIZE_18;
             goto word_init;
         case 2:
-            G_bolos_ux_context.onboarding_kind = MNEMONIC_SIZE_24;
+            G_bolos_ux_context.onboarding_kind = BIP39_MNEMONIC_SIZE_24;
             goto word_init;
         word_init:
             screen_onboarding_bip39_restore_init();

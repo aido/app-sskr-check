@@ -68,7 +68,7 @@ nbgl_button_t *generic_screen_set_back_button() {
     button->obj.area.height = BUTTON_DIAMETER;
     button->radius = BUTTON_RADIUS;
     button->text = NULL;
-    button->icon = &C_leftArrow32px;
+    button->icon = &C_Back_32px;
     button->obj.alignmentMarginX = 0;
     button->obj.alignmentMarginY = UPPER_MARGIN;
     button->obj.alignment = TOP_LEFT;

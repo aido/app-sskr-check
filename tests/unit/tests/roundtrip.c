@@ -113,7 +113,7 @@ static void test_bip39_to_sskr(void **state) {
 
     assert_int_equal(bolos_ux_bip39_to_sskr_convert(bip39_word_buffer,
                                                     sizeof(bip39_word_buffer) - 1,
-                                                    MNEMONIC_SIZE_24,
+                                                    BIP39_MNEMONIC_SIZE_24,
                                                     sskr_group_descriptor,
                                                     &share_count, sskr_words_buffer,
                                                     &sskr_words_buffer_len), 1);

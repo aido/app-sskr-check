@@ -21,52 +21,58 @@
 
 #if defined(TARGET_STAX)
 
-#define memzero(...)        explicit_bzero(__VA_ARGS__)
-#define MAX_MNEMONIC_LENGTH (MNEMONIC_SIZE_24 * (MAX_WORD_LENGTH + 1))
+#define memzero(...)              explicit_bzero(__VA_ARGS__)
+#define BIP39_MNEMONIC_MAX_LENGTH (BIP39_MNEMONIC_SIZE_24 * (BIP39_MAX_WORD_LENGTH + 1))
 
 /*
  * Sets how many words are expected in the mnemonic passphrase
  */
-void set_mnemonic_final_size(const size_t size);
+void bip39_mnemonic_final_size_set(const size_t size);
 
 /*
  * Returns how many words are expected in the mnemonic passphrase
  */
-size_t get_mnemonic_final_size(void);
+size_t bip39_mnemonic_final_size_get(void);
 
 /*
  * Returns how many words are currently stored in the mnemonic
  */
-size_t get_current_word_number(void);
+size_t bip39_mnemonic_current_word_number_get(void);
 
 /*
  * Check if the current number of words in the mnemonic fits the expected number of words
  */
-bool is_mnemonic_complete(void);
+bool bip39_mnemonic_complete_check(void);
 
 /*
  * Check if the currently stored mnemonic generates the same seed as the current device's one
  */
-bool check_mnemonic(void);
+bool bip39_mnemonic_check(void);
 
 /*
  * Erase all information and reset the indexes
  */
-void reset_mnemonic(void);
+void bip39_mnemonic_reset(void);
 
 /*
  * Remove the latest word from the passphrase, returns true if there was at least one to remove,
  * else false (there was no word)
  */
-bool remove_word_from_mnemonic(void);
+bool bip39_mnemonic_word_remove(void);
 
 /*
  * Adds a word in the passphrase, returns how many words are stored in the mnemonic
  */
-size_t add_word_in_mnemonic(const char* const buffer, const size_t size);
+size_t bip39_mnemonic_word_add(const char* const buffer, const size_t size);
 
-#if defined(TEST)
-char* get_mnemonic();
-#endif
+/*
+ * Returns the mnemonic passphrase
+ */
+char* bip39_mnemonic_get(void);
 
-#endif  // TARGET_NANOS
+/*
+ * Returns length of the mnemonic passphrase
+ */
+size_t bip39_mnemonic_length_get(void);
+
+#endif  // TARGET_STAX

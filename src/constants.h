@@ -19,13 +19,13 @@
 #define ONBOARDING_WORD_COMPLETION_MAX_ITEMS 8
 #define BOLOS_UX_HASH_LENGTH                 4  // as on the blue
 
-#define MAX_WORD_LENGTH   8
-#define MAX_NUMBER_LENGTH 2
+#define BIP39_MAX_WORD_LENGTH 8
+#define MAX_NUMBER_LENGTH     2
 
 enum {
-    MNEMONIC_SIZE_12 = 12,
-    MNEMONIC_SIZE_18 = 18,
-    MNEMONIC_SIZE_24 = 24,
+    BIP39_MNEMONIC_SIZE_12 = 12,
+    BIP39_MNEMONIC_SIZE_18 = 18,
+    BIP39_MNEMONIC_SIZE_24 = 24,
 };
 
 // Type of onboarding we are performing (BIP39 or SSKR)

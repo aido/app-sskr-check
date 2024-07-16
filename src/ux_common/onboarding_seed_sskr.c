@@ -70,7 +70,7 @@ void bolos_ux_sskr_hex_to_seed(unsigned char *mnemonic_hex,
                                unsigned char *words_buffer,
                                unsigned int *words_buffer_length,
                                unsigned char *seed) {
-    PRINTF("SSKR mnemonic in hex:\n %.*H\n", mnemonic_length, mnemonic_hex);
+    PRINTF("SSKR share in hex:\n %.*H\n", mnemonic_length, mnemonic_hex);
 
     uint8_t seed_buffer[SSKR_MAX_STRENGTH_BYTES] = {0};
     uint8_t seed_buffer_len =
@@ -154,7 +154,7 @@ unsigned int bolos_ux_sskr_mnemonic_encode(unsigned char *input,
             output[position++] = ' ';
         }
     }
-    PRINTF("SSKR mnemonic phrase:\n %.*s\n", output_len, output);
+    PRINTF("SSKR share:\n %.*s\n", output_len, output);
     return position;
 }
 

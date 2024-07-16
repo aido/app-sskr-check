@@ -6,7 +6,7 @@ endif()
 
 # project information
 project(unit_tests
-        VERSION 1.7.3
+        VERSION 1.8.0
 	      DESCRIPTION "Unit tests for app-seed-tool Ledger Application"
         LANGUAGES C)
 

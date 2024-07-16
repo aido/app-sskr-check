@@ -5,6 +5,12 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
+## [1.8.0] - 2024-07-29
+
+### Added
+
+- Add Stax layouts for generating SSKR shares
+
 ## [1.7.4] - 2024-06-20
 
 ### Fixed
@@ -28,7 +34,7 @@ and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0
 - Using Ledger SDK `cx_crc32()` function rather than buggy `cx_crc32_hw()`.
 - Fix build with SDK master for Nano S
 
-## [1.7.1] - 2024-03-06
+## [1.7.1] - 2024-04-06
 
 ### Changed
 
