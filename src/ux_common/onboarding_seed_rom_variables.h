@@ -18,12 +18,15 @@
 
 #define memzero(...) explicit_bzero(__VA_ARGS__)
 
+#define ALPHABET_LENGTH 27
+#define KBD_LETTERS     "qwertyuiopasdfghjklzxcvbnm"
+
 #define BIP39_WORDLIST_LENGTH         11068
 #define BIP39_WORDLIST_OFFSETS_LENGTH 2049
 #define BIP39_MNEMONIC_LENGTH         8
 
 #define SSKR_WORDLIST_LENGTH 1024
-#define SSKR_MNEMONIC_LENGTH 4
+#define SSKR_BYTEWORD_LENGTH 4
 
 #ifdef HAVE_ELECTRUM
 
@@ -42,7 +45,7 @@ extern unsigned char const WIDE BIP39_MNEMONIC[BIP39_MNEMONIC_LENGTH];
 
 extern unsigned char const WIDE SSKR_WORDLIST[SSKR_WORDLIST_LENGTH];
 extern unsigned short const WIDE SSKR_WORDLIST_OFFSET;
-extern unsigned char const WIDE SSKR_MNEMONIC[SSKR_MNEMONIC_LENGTH];
+extern unsigned char const WIDE SSKR_BYTEWORD[SSKR_BYTEWORD_LENGTH];
 
 #ifdef HAVE_ELECTRUM
 

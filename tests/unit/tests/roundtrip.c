@@ -85,10 +85,10 @@ uint8_t sskr_hex[]        = {0xD9, 0x9D, 0x75, 0x58, 0x25, 0x01, 0x00, 0x00,
 
 unsigned int sskr_group_descriptor[] = {2, 3};
 
-unsigned int bolos_ux_sskr_hex_decode(unsigned char *mnemonic_hex,
-                                      unsigned int mnemonic_length,
-                                      unsigned int sskr_shares_count,
-                                      unsigned char *output);
+unsigned int bolos_ux_sskr_combine(unsigned char *sskr_shares_hex,
+                                   unsigned int sskr_shares_hex_length,
+                                   unsigned int sskr_shares_count,
+                                   unsigned char *output);
 
 
 static void test_bip39_to_sskr(void **state) {
@@ -124,10 +124,10 @@ static void test_bip39_to_sskr(void **state) {
 
 static void test_sskr_to_bip39(void **state) {
     uint8_t seed_buffer[32];
-    uint8_t seed_buffer_len = bolos_ux_sskr_hex_decode(sskr_hex,
-                                                       sizeof(sskr_hex),
-                                                       sskr_group_descriptor[0],
-                                                       seed_buffer);
+    uint8_t seed_buffer_len = bolos_ux_sskr_combine(sskr_hex,
+                                                    sizeof(sskr_hex),
+                                                    sskr_group_descriptor[0],
+                                                    seed_buffer);
     unsigned char bip39_word_buffer[sizeof(bip39_mnemonic)];
     int16_t bip39_word_buffer_len = sizeof(bip39_word_buffer);
 

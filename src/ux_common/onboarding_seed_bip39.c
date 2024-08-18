@@ -6,9 +6,6 @@
 #include "onboarding_seed_rom_variables.h"
 #include "common.h"
 
-#define ALPHABET_LENGTH 27
-#define KBD_LETTERS     "qwertyuiopasdfghjklzxcvbnm"
-
 // separated function to lower the stack usage when jumping into pbkdf algorithm
 unsigned int bolos_ux_bip39_mnemonic_to_seed_hash_length128(unsigned char* mnemonic,
                                                             unsigned int mnemonic_length) {

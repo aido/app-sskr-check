@@ -27,9 +27,9 @@ Not all Ledger devices are equal. The older, less capable devices do not have th
 ||Nano S|Nano S+|Nano X|Stax|Flex|
 | :--- | :---: | :---: | :---: | :---: | :---: |
 |[Check BIP39](#check-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
-|[Check Shamir's secret shares](#check-shamirs-secret-shares)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[Check Shamir's secret shares](#check-shamirs-secret-shares)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
 |[Generate Shamir's secret sharing](#generate-shamirs-secret-sharing)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
-|[Recover BIP39](#recover-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[Recover BIP39](#recover-bip39)|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{green}✓}$$|$${\color{orange}✓}$$|
 |[Generate BIP85](#generate-bip85)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
 </div>
 

@@ -5,15 +5,18 @@ All notable changes to this project will be documented in this file.
 The format is based on [Keep a Changelog](https://keepachangelog.com/en/1.1.0/),
 and this project adheres to [Semantic Versioning](https://semver.org/spec/v2.0.0.html).
 
-## [1.8.0] - 2024-07-29
+## [1.8.0] - 2024-08-18
 
 ### Added
 
 - Add Stax layouts for generating SSKR shares
+- Add Stax layouts for checking SSKR shares
+- Add Stax layouts for recovering BIP39 phrase
 
 ## [1.7.4] - 2024-06-20
 
 ### Fixed
+
 - Ensure result does not overlap with operands in calls to `cx_bn_gf2_n_mul()`
 - Give a warning if a user chooses 1-of-m shares when m > 1
 - Use CBOR tag for version 2 `sskr`

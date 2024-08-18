@@ -66,6 +66,11 @@ bool bip39_mnemonic_word_remove(void);
 size_t bip39_mnemonic_word_add(const char* const buffer, const size_t size);
 
 /*
+ * Generate BIP39 mnemonic from SSKR shares
+ */
+void bip39_mnemonic_from_sskr_shares(void);
+
+/*
  * Returns the mnemonic passphrase
  */
 char* bip39_mnemonic_get(void);

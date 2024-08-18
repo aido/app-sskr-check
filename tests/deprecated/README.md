@@ -62,11 +62,16 @@ Tests taken from the [SSKR Example & Test Vector]( https://github.com/Blockchain
 ```bash
 ./speculos.py ../app-seed-tool/build/nanos/bin/app.elf --model nanos --seed "fly mule excess resource treat plunge nose soda reflect adult ramp planet"
 ```
+##### nanos
 ```bash
 while read -a LINE
 do
     curl -d '{"action":"press-and-release"}' -X ${LINE[0]} http://127.0.0.1:5000${LINE[1]}
 done < ./test/speculos/nanos-sskr-128bit.test > /dev/null 2>&1 &
+```
+##### stax
+```bash
+cut -d# -f1 ./tests/deprecated/stax-sskr-128bit.test | while read LINE ; do echo -n $n; curl -d "${LINE}" -X POST http://127.0.0.1:5000/finger; ((n++)); done > /dev/null 2>&1 &
 ```
 #### Speculos automation
 ```bash

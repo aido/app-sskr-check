@@ -423,12 +423,12 @@ void compare_recovery_phrase(void) {
                                         buffer);
     } else if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_SSKR) {
         G_bolos_ux_context.words_buffer_length = sizeof(G_bolos_ux_context.words_buffer);
-        bolos_ux_sskr_hex_to_seed((unsigned char*) G_bolos_ux_context.sskr_words_buffer,
-                                  G_bolos_ux_context.sskr_words_buffer_length,
-                                  G_bolos_ux_context.sskr_share_count,
-                                  (unsigned char*) &G_bolos_ux_context.words_buffer,
-                                  &G_bolos_ux_context.words_buffer_length,
-                                  buffer);
+        bolos_ux_sskr_to_seed_convert((unsigned char*) G_bolos_ux_context.sskr_words_buffer,
+                                      G_bolos_ux_context.sskr_words_buffer_length,
+                                      G_bolos_ux_context.sskr_share_count,
+                                      (unsigned char*) &G_bolos_ux_context.words_buffer,
+                                      &G_bolos_ux_context.words_buffer_length,
+                                      buffer);
     }
 
     // get rootkey from hex-seed
@@ -684,7 +684,7 @@ void screen_onboarding_restore_word_init(unsigned int action) {
             G_bolos_ux_context.sskr_share_index = 0;
 
             // flush the words first
-            memzero(G_bolos_ux_context.words_buffer, sizeof(G_bolos_ux_context.words_buffer));
+            memzero(G_bolos_ux_context.words_buffer, G_bolos_ux_context.words_buffer_length);
             G_bolos_ux_context.words_buffer_length = 0;
             G_bolos_ux_context.sskr_words_buffer_length = 0;
             break;

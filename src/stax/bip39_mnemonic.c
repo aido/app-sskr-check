@@ -2,7 +2,9 @@
 #include <string.h>
 
 #include "../ux_common/common_bip39.h"
+#include "../ux_common/common_sskr.h"
 #include "./bip39_mnemonic.h"
+#include "./sskr_shares.h"
 
 #if defined(TARGET_STAX)
 
@@ -21,7 +23,7 @@ typedef struct bip39_buffer_struct {
 
 static bip39_buffer_t mnemonic = {0};
 
-size_t mnemonic_shrink(const size_t size) {
+size_t bip39_mnemonic_shrink(const size_t size) {
     if (size == 0 || size > mnemonic.length) {
         // shrink all
         mnemonic.length = 0;
@@ -57,7 +59,7 @@ bool bip39_mnemonic_word_remove(void) {
     const size_t current_length = mnemonic.word_lengths[mnemonic.current_word_index];
     mnemonic.current_word_index--;
     // removing previous word from mnemonic buffer (+ 1 blank space)
-    mnemonic_shrink(current_length + 1);
+    bip39_mnemonic_shrink(current_length + 1);
     PRINTF("Number of remaining words in the mnemonic: '%d'\n", mnemonic.current_word_index + 1);
     return true;
 }
@@ -92,9 +94,26 @@ bool bip39_mnemonic_check(void) {
            mnemonic.length);
     const bool result =
         bolos_ux_bip39_mnemonic_check((unsigned char*) &mnemonic.buffer[0], mnemonic.length);
-    // Don;t clear the mneminic just yet as we may need it to generate SSKR shares
+    // Don't clear the mnemonic just yet as we may need it to generate SSKR shares
     //    bip39_mnemonic_reset();
     return result;
+}
+
+void bip39_mnemonic_from_sskr_shares(void) {
+    mnemonic.length = BIP39_MNEMONIC_MAX_LENGTH;
+    uint8_t buffer[64] = {0};
+
+    bolos_ux_sskr_to_seed_convert((const unsigned char*) sskr_shares_get(),
+                                  sskr_shares_length_get(),
+                                  sskr_sharecount_get(),
+                                  (const unsigned char*) bip39_mnemonic_get(),
+                                  &mnemonic.length,
+                                  buffer);
+    memzero(buffer, sizeof(buffer));
+
+    if (mnemonic.length > 0) {
+        PRINTF("BIP39 mnemonic: %.*s\n", mnemonic.length, bip39_mnemonic_get());
+    }
 }
 
 // Used for BIP39 <-> SSKR roundtrip

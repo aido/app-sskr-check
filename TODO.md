@@ -6,13 +6,14 @@
 - [ ] Improve the efficiency of the custom cx_bn_gf2_n_mul() function used for Nano S devices
 - [ ] Update automated function tests to test on nanox and nanosp
 - [ ] There is just enough memory available on Nano S to hold the phrases for 10 shares. Maybe just store SSKR Bytewords as shorter two letter minimal Bytewords rather than a 4 letter Byteword plus space for each share. Convert minimal ByteWords back to four letter Bytewords just prior to display.
+- [ ] Add Ledger Flex to list of devices app works on
 
 ### In Progress
 
 - [ ] Add Ledger Stax to list of devices app works on
   - [x] Add SSKR Generate option to Stax
-  - [ ] Add SSKR Check option to Stax
-  - [ ] Write SSKR to BIP39 functionality
+  - [x] Add SSKR Check option to Stax
+  - [x] Write SSKR to BIP39 functionality
   - [ ] Functional Test with 29-word SSKR shares
   - [ ] Functional Test with 46-word SSKR shares
 

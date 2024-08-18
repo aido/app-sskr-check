@@ -23,6 +23,35 @@
 // 16 shares * 229 chars per share (46 SSKR ByteWords)
 #define SSKR_SHARES_MAX_LENGTH 3664
 
+// All ByteWords have uniform length of 4
+#define SSKR_BYTEWORD_LENGTH 4
+
+/*
+ * Remove the latest word from the shares, returns true if there was at least one to remove,
+ * else false (there was no word)
+ */
+bool sskr_shares_word_remove(void);
+
+/*
+ * Adds a word in the shares phrase, returns how many words are stored in the share
+ */
+size_t sskr_shares_word_add(const char* const buffer);
+
+/*
+ * Returns how many words are currently stored in the shares phrase
+ */
+size_t sskr_shares_current_word_number_get(void);
+
+/*
+ * Check if the current number of words in the shares fits the expected number of words
+ */
+bool sskr_shares_complete_check(void);
+
+/*
+ * Check if the currently stored mnemonic generates the same seed as the current device's one
+ */
+bool sskr_shares_check(void);
+
 /*
  * Sets the number of SSKR shares
  */
@@ -46,8 +75,12 @@ uint8_t sskr_threshold_get(void);
 /*
  * Returns the SSKR share count
  */
-
 uint8_t sskr_sharecount_get(void);
+
+/*
+ * Returns the SSKR share index
+ */
+uint8_t sskr_shareindex_get(void);
 
 /*
  * Erase all information and reset the indexes
