@@ -1,0 +1,32 @@
+WEBVTT
+Kind: subtitles
+Language: en
+
+STYLE
+cue {
+   color: yellow;
+}
+
+00:10.000 --> 00:13.000
+To generate Shamir's Secret Shares
+
+00:13.000 --> 00:16.000
+you first need to enter a valid BIP39 phrase
+
+00:16.000 --> 00:19.000
+This is done by selecting the 'BIP39 Check' menu
+
+00:19.000 --> 00:22.000
+Proceed by entering the BIP39 phrase
+
+01:13.000 --> 01:16.000
+If the BIP39 phrase is correct
+
+01:16.000 --> 01:19.000
+you may then choose 'Generate SSKR'
+
+01:19.000 --> 01:22.000
+and then choose number of shares and the threshold value
+
+01:22.000 --> 01:25.000
+You  may now review the SSKR shares generated

@@ -1,0 +1,29 @@
+WEBVTT
+Kind: subtitles
+Language: en
+
+STYLE
+cue {
+   color: yellow;
+}
+
+00:10.000 --> 00:13.000
+To recover a BIP39 phrase
+
+00:13.000 --> 00:16.000
+you first need to enter valid SSKR phrases
+
+00:16.000 --> 00:19.000
+This is done by selecting the 'SSKR Check' menu
+
+00:19.000 --> 00:22.000
+Proceed by entering the SSKR phrases
+
+04:00.000 --> 04:04.000
+If the SSKR phrases are valid
+
+04:04.000 --> 04:08.000
+you may then choose 'Recover BIP39'
+
+04:08.000 --> 04:12.000
+You can now review the recovered BIP39 phrase
