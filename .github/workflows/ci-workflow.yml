@@ -28,7 +28,7 @@ jobs:
     with:
       download_app_binaries_artifact: compiled_app_binaries
       test_dir: tests/functional
-      run_for_devices: '["nanos"]'
+      run_for_devices: '["nanos", "stax"]'
 
   ledger_app_test_unit:
     name: Unit tests
