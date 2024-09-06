@@ -50,7 +50,6 @@ void generic_screen_configure_buttons(nbgl_button_t **buttons, const size_t size
         button->radius = BUTTON_RADIUS;
         button->fontId = BAGL_FONT_INTER_SEMIBOLD_24px;
         button->icon = NULL;
-        button->localized = true;
         button->obj.alignmentMarginX = 0;
         button->obj.alignmentMarginY = (button->obj.area.height + 8) * i + BORDER_MARGIN;
         button->obj.alignment = BOTTOM_MIDDLE;
