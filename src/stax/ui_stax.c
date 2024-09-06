@@ -555,6 +555,7 @@ static void display_bip39_mnemonic(void) {
          .contentActionCallback = NULL,
          .content.tagValueList.nbPairs = 1,
          .content.tagValueList.nbMaxLinesForValue = 0,
+         .content.tagValueList.wrapping = true,
          .content.tagValueList.pairs = (nbgl_layoutTagValue_t *) pairs}};
     static const nbgl_genericContents_t genericContent = {.callbackCallNeeded = false,
                                                           .contentsList = content,
@@ -566,13 +567,6 @@ static void display_bip39_mnemonic(void) {
     strncpy(value_buffer, bip39_mnemonic_get(), bip39_mnemonic_length_get());
     // Ensure null termination
     value_buffer[bip39_mnemonic_length_get()] = '\0';
-    // Format output
-    for (uint8_t i = 20; i < (uint8_t) bip39_mnemonic_length_get(); i += 21) {
-        while (value_buffer[i] != ' ') {
-            i--;
-        }
-        value_buffer[i] = '\n';
-    }
     pairs[0].value = value_buffer;
 
     nbgl_useCaseGenericReview(&genericContent, "Done", review_done);
@@ -585,6 +579,7 @@ static void review_sskr_shares_contentGetter(uint8_t index, nbgl_content_t *gene
     genericreview->contentActionCallback = NULL;
     genericreview->content.tagValueList.nbPairs = 1;
     genericreview->content.tagValueList.nbMaxLinesForValue = 0;
+    genericreview->content.tagValueList.wrapping = true;
     genericreview->content.tagValueList.pairs = (nbgl_layoutTagValue_t *) pairs;
 
     SPRINTF(item_buffer, "SSKR Share #%d", index + 1);
@@ -598,10 +593,6 @@ static void review_sskr_shares_contentGetter(uint8_t index, nbgl_content_t *gene
             sskr_shares_length_get() / sskr_sharecount_get());
     // Ensure null termination
     value_buffer[sskr_shares_length_get() / sskr_sharecount_get()] = '\0';
-    // Format output
-    for (uint8_t i = 19; i < (uint8_t)(sskr_shares_length_get() / sskr_sharecount_get()); i += 20) {
-        value_buffer[i] = '\n';
-    }
     pairs[0].value = value_buffer;
 }
 
@@ -668,5 +659,4 @@ void display_sskr_select_threshold_page() {
 void ui_idle_init(void) {
     display_home_page();
 }
-
 #endif
