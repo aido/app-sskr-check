@@ -65,7 +65,7 @@ enum select_tool {
     SELECT_TOOL_NB_CHILDREN
 };
 
-#define SELECT_TOOL_NB_BUTTONS 4
+#define SELECT_TOOL_NB_BUTTONS 3
 
 static const char *toolType[] = {"BIP39 Check", "SSKR Check", "BIP85 Generate"};
 static void select_tool_callback(nbgl_obj_t *obj, nbgl_touchType_t eventType) {
@@ -185,7 +185,8 @@ enum select_bip39_phrase_length {
     SELECT_BIP39_PHRASE_LENGTH_BUTTON_18_INDEX,
     SELECT_BIP39_PHRASE_LENGTH_BUTTON_24_INDEX,
     SELECT_BIP39_PHRASE_LENGTH_BACK_BUTTON_INDEX,
-    SELECT_BIP39_PHRASE_LENGTH_KBD_TEXT_TOKEN,
+    SELECT_BIP39_PHRASE_LENGTH_NB_CHILDREN,
+    KBD_TEXT_TOKEN
 };
 
 #define SELECT_BIP39_PHRASE_LENGTH_NB_BUTTONS 3
@@ -217,7 +218,7 @@ static void display_bip39_select_phrase_length_page(void) {
 
     // 3 buttons + icon + text + subText
     nbgl_screenSet(&screenChildren,
-                   6,
+                   SELECT_BIP39_PHRASE_LENGTH_NB_CHILDREN,
                    NULL,
                    (nbgl_touchCallback_t) &select_bip39_phrase_length_callback);
 
@@ -388,7 +389,7 @@ static void display_check_keyboard_page() {
                             ? bip39_mnemonic_current_word_number_get() + 1
                             : sskr_shares_current_word_number_get() + 1;
     kbdContent.grayedOut = false;
-    kbdContent.textToken = SELECT_BIP39_PHRASE_LENGTH_KBD_TEXT_TOKEN;
+    kbdContent.textToken = KBD_TEXT_TOKEN;
     kbdContent.suggestionButtons.buttons = buttonTexts;
     kbdContent.suggestionButtons.firstButtonToken = CHECK_FIRST_SUGGESTION_TOKEN;
     kbdContent.suggestionButtons.nbUsedButtons = 0;  // no used buttons at start-up
