@@ -2,7 +2,7 @@
 #pragma once
 
 // BIP39 helpers
-#include "onboarding_seed_rom_variables.h"
+#include "./seed_rom_variables.h"
 
 // convert mnemonic phrase to bits return 0 if mnemonic is invalid
 unsigned int bolos_ux_bip39_mnemonic_decode(const unsigned char *mnemonic,

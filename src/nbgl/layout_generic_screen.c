@@ -1,22 +1,26 @@
 #include <os.h>
 #include "glyphs.h"
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
 #include <nbgl_obj.h>
 
-#define UPPER_MARGIN    4
-#define BUTTON_DIAMETER 80
-#define ICON_X          0
-#define ICON_Y          148
+#define UPPER_MARGIN 4
+#define ICON_X       0
+#define ICON_Y       148
 
 nbgl_image_t *generic_screen_set_icon(const nbgl_icon_details_t *icon) {
     nbgl_image_t *image = (nbgl_image_t *) nbgl_objPoolGet(IMAGE, 0);
     image->foregroundColor = BLACK;
     image->buffer = icon;
     image->obj.area.bpp = NBGL_BPP_1;
-    image->obj.alignmentMarginX = ICON_X;
-    image->obj.alignmentMarginY = ICON_Y;
+#if defined(TARGET_STAX)
+    uint8_t divide = 1;
+#elif defined(TARGET_FLEX)
+    uint8_t divide = 2;
+#endif
+    image->obj.alignmentMarginX = ICON_X / divide;
+    image->obj.alignmentMarginY = ICON_Y / divide;
     image->obj.alignment = TOP_MIDDLE;
     image->obj.alignTo = NULL;
     return image;
@@ -27,7 +31,7 @@ nbgl_text_area_t *generic_screen_set_title(nbgl_obj_t *align_to) {
     textArea->textColor = BLACK;
     textArea->text = "";
     textArea->textAlignment = CENTER;
-    textArea->fontId = BAGL_FONT_INTER_MEDIUM_32px;
+    textArea->fontId = LARGE_MEDIUM_FONT;
     textArea->obj.area.width = SCREEN_WIDTH - 2 * BORDER_MARGIN;
     textArea->obj.area.height = nbgl_getTextHeight(textArea->fontId, textArea->text);
     textArea->style = NO_STYLE;
@@ -48,7 +52,7 @@ void generic_screen_configure_buttons(nbgl_button_t **buttons, const size_t size
         button->obj.area.width = SCREEN_WIDTH - 2 * BORDER_MARGIN;
         button->obj.area.height = BUTTON_DIAMETER;
         button->radius = BUTTON_RADIUS;
-        button->fontId = BAGL_FONT_INTER_SEMIBOLD_24px;
+        button->fontId = SMALL_BOLD_1BPP_FONT;
         button->icon = NULL;
         button->obj.alignmentMarginX = 0;
         button->obj.alignmentMarginY = (button->obj.area.height + 8) * i + BORDER_MARGIN;
@@ -67,7 +71,7 @@ nbgl_button_t *generic_screen_set_back_button() {
     button->obj.area.height = BUTTON_DIAMETER;
     button->radius = BUTTON_RADIUS;
     button->text = NULL;
-    button->icon = &C_Back_32px;
+    button->icon = &LEFT_ARROW_ICON;
     button->obj.alignmentMarginX = 0;
     button->obj.alignmentMarginY = UPPER_MARGIN;
     button->obj.alignment = TOP_LEFT;

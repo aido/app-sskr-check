@@ -9,8 +9,6 @@ enum UI_STATE { UI_IDLE, UI_TEXT, UI_APPROVAL };
 
 enum UI_STATE uiState;
 
-ux_state_t G_ux;
-
 //////////////////////////////////////////////////////////////////////
 
 void screen_onboarding_bip39_restore_init(void) {
@@ -53,7 +51,7 @@ void number_of_bip39_words_selector(unsigned int idx) {
 
 #if defined(TARGET_NANOS)
 UX_STEP_NOCB(ux_bip39_instruction_step, nn, {"Enter number", "of BIP39 words"});
-#elif defined(TARGET_NANOX) || defined(TARGET_NANOS2)
+#else
 UX_STEP_NOCB(ux_bip39_instruction_step,
              nnn,
              {
@@ -82,7 +80,7 @@ UX_STEP_CB(ux_sskr_instruction_step,
                "Enter SSKR",
                "recovery phrase",
            });
-#elif defined(TARGET_NANOX) || defined(TARGET_NANOS2)
+#else
 UX_STEP_CB(ux_sskr_instruction_step, nnn, G_bolos_ux_context.onboarding_type = ONBOARDING_TYPE_SSKR;
            screen_onboarding_restore_word_init(RESTORE_WORD_ACTION_FIRST_WORD);
            ,

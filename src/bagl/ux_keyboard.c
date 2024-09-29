@@ -17,9 +17,7 @@
 #include "constants.h"
 #include "ui.h"
 
-#if defined(TARGET_NANOS) || defined(TARGET_NANOX) || defined(TARGET_NANOS2)
-
-#ifdef OS_IO_SEPROXYHAL
+#if defined(HAVE_BAGL)
 
 #if defined(TARGET_NANOS)
 
@@ -220,7 +218,8 @@ const bagl_element_t screen_common_keyboard_elements[] = {
     {{BAGL_ICON, 0x00, 121, 12, 4, 7, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0},
      (const char*) &C_icon_right},
 };
-#elif defined(TARGET_NANOX) || defined(TARGET_NANOS2)
+#else
+#ifdef OS_IO_SEPROXYHAL
 
 const bagl_element_t screen_common_keyboard_elements[] = {
 
@@ -423,6 +422,7 @@ const bagl_element_t screen_common_keyboard_elements[] = {
     {{BAGL_ICON, 0x0B, 122, 28, 4, 7, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0},
      (const char*) &C_icon_right},
 };
+#endif  // OS_IO_SEPROXYHAL
 #endif  // TARGETS
 
 const bagl_element_t* screen_common_keyboard_before_element_display_callback(
@@ -551,6 +551,4 @@ void screen_common_keyboard_init(unsigned int stack_slot,
     ux_stack_display(stack_slot);
 }
 
-#endif  // OS_IO_SEPROXYHAL
-
-#endif
+#endif  // defined(HAVE_BAGL)

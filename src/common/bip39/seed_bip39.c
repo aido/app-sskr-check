@@ -3,8 +3,8 @@
 #include <os.h>
 #include <cx.h>
 
-#include "onboarding_seed_rom_variables.h"
-#include "common.h"
+#include "../common.h"
+#include "./seed_rom_variables.h"
 
 // separated function to lower the stack usage when jumping into pbkdf algorithm
 unsigned int bolos_ux_bip39_mnemonic_to_seed_hash_length128(unsigned char* mnemonic,
@@ -310,7 +310,7 @@ size_t bolos_ux_bip39_fill_with_candidates(const unsigned char* startingChars,
 
 uint32_t bolos_ux_bip39_get_keyboard_mask(const unsigned char* prefix,
                                           const unsigned int prefixLength) {
-    uint32_t existing_mask = 0;
+    uint32_t existing_mask = 1 << 28;  // Starting with the 'return' keypad activated
     unsigned char next_letters[ALPHABET_LENGTH] = {0};
     PRINTF("Looking for letter candidates following '%s'\n", prefix);
     const size_t nb_letters =

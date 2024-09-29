@@ -19,9 +19,8 @@
 #include <stdbool.h>
 #include "constants.h"
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
-#define memzero(...)              explicit_bzero(__VA_ARGS__)
 #define BIP39_MNEMONIC_MAX_LENGTH (BIP39_MNEMONIC_SIZE_24 * (BIP39_MAX_WORD_LENGTH + 1))
 
 /*
@@ -80,4 +79,4 @@ char* bip39_mnemonic_get(void);
  */
 size_t bip39_mnemonic_length_get(void);
 
-#endif  // TARGET_STAX
+#endif  // SCREEN_SIZE_WALLET

@@ -1,6 +1,6 @@
 #*******************************************************************************
-#   Ledger Blue
-#   (c) 2016 Ledger
+#   Ledger App
+#   (c) 2024 Ledger
 #
 #  Licensed under the Apache License, Version 2.0 (the "License");
 #  you may not use this file except in compliance with the License.
@@ -18,12 +18,9 @@
 ifeq ($(BOLOS_SDK),)
 $(error Environment variable BOLOS_SDK is not set)
 endif
-
 include $(BOLOS_SDK)/Makefile.defines
 
 all: default
-
-# Main app configuration
 
 APPNAME = "Seed Tool"
 APPVERSION_M = 1
@@ -36,116 +33,36 @@ ifneq ($(APPVERSION_RC), 0)
     APPVERSION := $(APPVERSION)-rc.$(APPVERSION_RC)
 endif
 
-APP_LOAD_PARAMS = --appFlags 0x10 $(COMMON_LOAD_PARAMS) --curve secp256k1 --path ""
+VARIANT_PARAM  = NONE
+VARIANT_VALUES = seed_tool
 
-ifeq ($(TARGET_NAME), TARGET_NANOS)
-    ICONNAME=glyphs/seed_nanos.gif
-else ifeq ($(TARGET_NAME), TARGET_STAX)
-    ICONNAME=glyphs/seed_stax_32px.gif
-else
-    ICONNAME=glyphs/seed_nanox.gif
-endif
+CURVE_APP_LOAD_PARAMS = secp256k1
+PATH_APP_LOAD_PARAMS = ""
+HAVE_APPLICATION_FLAG_DERIVE_MASTER = 1
 
-# Build configuration
+ICON_NANOS  = glyphs/seed_nanos.gif
+ICON_NANOSP = glyphs/seed_nanox.gif
+ICON_NANOX  = glyphs/seed_nanox.gif
+ICON_STAX   = glyphs/seed_stax_32px.gif
+ICON_FLEX   = glyphs/seed_flex_40px.gif
 
-#DEFINES += APPNAME=\"$(APPNAME)\"
-DEFINES += APPVERSION=\"$(APPVERSION)\"
-DEFINES += LEDGER_MAJOR_VERSION=$(APPVERSION_M)
-DEFINES += LEDGER_MINOR_VERSION=$(APPVERSION_N)
-DEFINES += LEDGER_PATCH_VERSION=$(APPVERSION_P)
-DEFINES += OS_IO_SEPROXYHAL
-
-DEFINES += BOLOS_APP_ICON_SIZE_B=\(9+32\)
 #DEFINES += HAVE_ELECTRUM
-DEFINES += IO_USB_MAX_ENDPOINTS=4 IO_HID_EP_LENGTH=64
-DEFINES += HAVE_SPRINTF
 
-ifneq ($(TARGET_NAME), TARGET_STAX)
+ifneq ($(TARGET_NAME), $(filter $(TARGET_NAME), TARGET_STAX TARGET_FLEX))
     $(info Using BAGL)
-    DEFINES += HAVE_BAGL HAVE_UX_FLOW
+    DEFINES += HAVE_BAGL
+    DEFINES += BOLOS_APP_ICON_SIZE_B=\(9+32\)
+    ifeq ($(TARGET_NAME),TARGET_NANOS)
+        DISABLE_STANDARD_USB = 1
+    endif
 else
     $(info Using NBGL)
-    DEFINES += NBGL_KEYBOARD
-    DEFINES += NBGL_KEYPAD
-endif
-
-ifeq ($(TARGET_NAME), TARGET_NANOS)
-    DEFINES += IO_SEPROXYHAL_BUFFER_SIZE_B=128
-else
-    DEFINES += IO_SEPROXYHAL_BUFFER_SIZE_B=300
-    ifneq ($(TARGET_NAME), TARGET_STAX)
-        DEFINES += HAVE_GLO096
-        DEFINES += BAGL_WIDTH=128 BAGL_HEIGHT=64
-        DEFINES += HAVE_BAGL_ELLIPSIS # long label truncation feature
-        DEFINES += HAVE_BAGL_FONT_OPEN_SANS_REGULAR_11PX
-        DEFINES += HAVE_BAGL_FONT_OPEN_SANS_EXTRABOLD_11PX
-        DEFINES += HAVE_BAGL_FONT_OPEN_SANS_LIGHT_16PX
-        DEFINES += HAVE_KEYBOARD_UX
-    endif
+    ENABLE_NBGL_KEYBOARD = 1
+    ENABLE_NBGL_KEYPAD = 1
 endif
 
 DEBUG = 0
 
-ifneq ($(DEBUG), 0)
-    $(info DEBUG enabled)
-    DEFINES += HAVE_IO_USB HAVE_USB_APDU
-    SDK_SOURCE_PATH  += lib_stusb lib_stusb_impl
-    DEFINES += HAVE_PRINTF
-    ifeq ($(TARGET_NAME), TARGET_NANOS)
-        DEFINES += PRINTF=screen_printf
-    else
-        DEFINES += PRINTF=mcu_usb_printf
-    endif
-else
-    DEFINES += PRINTF\(...\)=
-endif
-
-##############
-# Compiler #
-##############
-ifneq ($(BOLOS_ENV),)
-    $(info BOLOS_ENV=$(BOLOS_ENV))
-    CLANGPATH := $(BOLOS_ENV)/clang-arm-fropi/bin/
-    GCCPATH := $(BOLOS_ENV)/gcc-arm-none-eabi-5_3-2016q1/bin/
-else
-    $(info BOLOS_ENV is not set: falling back to CLANGPATH and GCCPATH)
-endif
-ifeq ($(CLANGPATH),)
-    $(info CLANGPATH is not set: clang will be used from PATH)
-endif
-ifeq ($(GCCPATH),)
-    $(info GCCPATH is not set: arm-none-eabi-* will be used from PATH)
-endif
-
-CC := $(CLANGPATH)clang
-CFLAGS += -Wshadow -Wformat -DAPPNAME=\"$(APPNAME)\"
-AS := $(GCCPATH)arm-none-eabi-gcc
-LD := $(GCCPATH)arm-none-eabi-gcc
-LDLIBS += -lm -lgcc -lc
-
-
-include $(BOLOS_SDK)/Makefile.glyphs
-
 APP_SOURCE_PATH += src
 
-ifneq ($(TARGET_NAME),TARGET_NANOS)
-    ifneq ($(TARGET_NAME), TARGET_STAX)
-        SDK_SOURCE_PATH  += lib_ux
-    endif
-endif
-
-# Main rules
-
-load: all
-	python -m ledgerblue.loadApp $(APP_LOAD_PARAMS)
-
-delete:
-	python -m ledgerblue.deleteApp $(COMMON_DELETE_PARAMS)
-
-# Import generic rules from the SDK
-
-include $(BOLOS_SDK)/Makefile.rules
-
-
-listvariants:
-	@echo VARIANTS APP seed_tool
+include $(BOLOS_SDK)/Makefile.standard_app

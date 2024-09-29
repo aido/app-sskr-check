@@ -16,24 +16,22 @@
 
 #pragma once
 
-#include "ux_common/common.h"
+#include <ux.h>
+#include "../common/common.h"
 
-#if defined(TARGET_NANOS)
-#define BIP39_ICON                         C_bip39_nanos
-#define SSKR_ICON                          C_sskr_nanos
-#define PROCESSING_COMPLETE                0
-#define PROCESSING_COMPARE_RECOVERY_PHRASE 1
-#define PROCESSING_GENERATE_SSKR           2
-#elif defined(TARGET_NANOX) || defined(TARGET_NANOS2)
-#define BIP39_ICON C_bip39_nanox
-#define SSKR_ICON  C_sskr_nanox
-#endif
+#if defined(HAVE_BAGL)
 
-#if defined(TARGET_NANOS)
-typedef unsigned int (*callback_t)(unsigned int);
-#endif  // defined(TARGET_NANOS)
+typedef const bagl_element_t* (*keyboard_callback_t)(unsigned int event, unsigned int value);
 
-#if (defined(TARGET_NANOS) || defined(TARGET_NANOX) || defined(TARGET_NANOS2))
+void bolos_ux_hslider3_init(unsigned int total_count);
+void bolos_ux_hslider3_set_current(unsigned int current);
+void bolos_ux_hslider3_next(void);
+void bolos_ux_hslider3_previous(void);
+
+// all screens
+void screen_onboarding_bip39_restore_init(void);
+void screen_onboarding_sskr_restore_init(void);
+void screen_onboarding_restore_word_init(unsigned int action);
 
 // bolos ux context (not mandatory if redesigning a bolos ux)
 typedef struct bolos_ux_context {
@@ -84,8 +82,8 @@ typedef struct bolos_ux_context {
     uint8_t processing;
 
 #if defined(TARGET_NANOS)
-    // 10 shares * 229 chars per share (46 SSKR Bytewords)
-#define SSKR_WORDS_BUFFER_MAX_SIZE_B 2290
+    // 7 shares * 229 chars per share (46 SSKR Bytewords)
+#define SSKR_WORDS_BUFFER_MAX_SIZE_B 1603
 #else
     // 16 shares * 229 chars per share (46 SSKR Bytewords)
 #define SSKR_WORDS_BUFFER_MAX_SIZE_B 3664
@@ -111,22 +109,28 @@ void screen_common_keyboard_init(unsigned int stack_slot,
 void set_sskr_descriptor_values(void);
 void recover_bip39(void);
 
-#include "ux_common/common_bip39.h"
-#include "ux_common/common_sskr.h"
+#include "common/bip39/common_bip39.h"
+#include "common/sskr/common_sskr.h"
 
 void clean_exit(bolos_task_status_t exit_code);
 
 #if defined(TARGET_NANOS)
+#define BIP39_ICON                         C_bip39_nanos
+#define SSKR_ICON                          C_sskr_nanos
+#define PROCESSING_COMPLETE                0
+#define PROCESSING_COMPARE_RECOVERY_PHRASE 1
+#define PROCESSING_GENERATE_SSKR           2
+
 extern const bagl_element_t screen_onboarding_word_list_elements[9];
 void compare_recovery_phrase(void);
 void generate_sskr(void);
+void screen_processing_init(void);
 #else
+#define BIP39_ICON C_bip39_nanox
+#define SSKR_ICON  C_sskr_nanox
+
 // to be included into all flow that needs to go back to the dashboard
 extern const ux_flow_step_t ux_ob_goto_dashboard_step;
-#endif
-
-#if defined(TARGET_NANOS)
-void screen_processing_init(void);
 #endif  // defined(TARGET_NANOS)
 
-#endif  // (TARGET_NANOS || TARGET_NANOX || TARGET_NANOS2)
+#endif  // defined(HAVE_BAGL)

@@ -1,6 +1,6 @@
 #pragma once
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
 nbgl_image_t *generic_screen_set_icon(const nbgl_icon_details_t *icon);
 nbgl_text_area_t *generic_screen_set_title(nbgl_obj_t *align_to);

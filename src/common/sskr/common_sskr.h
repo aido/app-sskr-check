@@ -2,7 +2,7 @@
 #pragma once
 
 // SSKR helpers
-#include "onboarding_seed_rom_variables.h"
+#include "./seed_rom_variables.h"
 
 // Encode SSKR ByteWord as hex
 unsigned int bolos_ux_sskr_byteword_to_hex(unsigned char *byteword);

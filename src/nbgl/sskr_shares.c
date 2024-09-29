@@ -1,11 +1,11 @@
 #include <os.h>
 #include <string.h>
 
-#include "../ux_common/common_sskr.h"
+#include "../common/sskr/common_sskr.h"
 #include "./sskr_shares.h"
 #include "./bip39_mnemonic.h"
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
 typedef struct sskr_buffer_struct {
     // The SSKR shares, built over time

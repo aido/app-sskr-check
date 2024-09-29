@@ -16,29 +16,28 @@
 
 #pragma once
 
-#include <ux.h>
+#define BIP39_WORDLIST_LENGTH         11068
+#define BIP39_WORDLIST_OFFSETS_LENGTH 2049
+#define BIP39_MNEMONIC_LENGTH         8
 
-#ifdef OS_IO_SEPROXYHAL
+#ifdef HAVE_ELECTRUM
 
-#ifndef SPRINTF
-// avoid typing the size each time
-#define SPRINTF(strbuf, ...) snprintf((char*) (strbuf), sizeof(strbuf), __VA_ARGS__)
+#define ELECTRUM_SEED_VERSION_LENGTH  12
+#define ELECTRUM_MNEMONIC_LENGTH      8
+#define ELECTRUM_SEED_PREFIX_STANDARD 0x01
+#define ELECTRUM_PBKDF2_ROUNDS        2048
+
 #endif
 
-#if defined(HAVE_NBGL)
-typedef const nbgl_obj_t* (*keyboard_callback_t)(unsigned int event, unsigned int value);
-#else
-typedef const bagl_element_t* (*keyboard_callback_t)(unsigned int event, unsigned int value);
+#define BIP39_PBKDF2_ROUNDS 2048
+
+extern unsigned char const WIDE BIP39_WORDLIST[BIP39_WORDLIST_LENGTH];
+extern unsigned short const WIDE BIP39_WORDLIST_OFFSETS[BIP39_WORDLIST_OFFSETS_LENGTH];
+extern unsigned char const WIDE BIP39_MNEMONIC[BIP39_MNEMONIC_LENGTH];
+
+#ifdef HAVE_ELECTRUM
+
+extern unsigned char const WIDE ELECTRUM_SEED_VERSION[ELECTRUM_SEED_VERSION_LENGTH];
+extern unsigned char const WIDE ELECTRUM_MNEMONIC[ELECTRUM_MNEMONIC_LENGTH];
+
 #endif
-
-void bolos_ux_hslider3_init(unsigned int total_count);
-void bolos_ux_hslider3_set_current(unsigned int current);
-void bolos_ux_hslider3_next(void);
-void bolos_ux_hslider3_previous(void);
-
-// all screens
-void screen_onboarding_bip39_restore_init(void);
-void screen_onboarding_sskr_restore_init(void);
-void screen_onboarding_restore_word_init(unsigned int action);
-
-#endif  // OS_IO_SEPROXYHAL

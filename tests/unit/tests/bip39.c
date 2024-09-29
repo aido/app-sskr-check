@@ -5,7 +5,7 @@
 #include <cmocka.h>
 
 #include "testutils.h"
-#include "common_bip39.h"
+#include "bip39/common_bip39.h"
 
 const unsigned char bip39_mnemonic[] = "toe priority custom gauge jacket theme arrest bargain gloom wide ill fit eagle prepare capable fish limb cigar reform other priority speak rough imitate";
 

@@ -13,8 +13,8 @@
 #include <nbgl_page.h>
 #include <nbgl_layout.h>
 
-#include "../ux_common/common_bip39.h"
-#include "../ux_common/common_sskr.h"
+#include "../common/bip39/common_bip39.h"
+#include "../common/sskr/common_sskr.h"
 #include "../ui.h"
 #include "./bip39_mnemonic.h"
 #include "./sskr_shares.h"
@@ -95,7 +95,8 @@ static void select_tool_callback(nbgl_obj_t *obj, nbgl_touchType_t eventType) {
 static void display_select_tool_page(void) {
     nbgl_obj_t **screenChildren;
 
-    // 3 buttons + icon + text + subText
+    // From top to bottom:
+    // <return back arrow> + <icon> + <text> + <3 buttons>
     nbgl_screenSet(&screenChildren,
                    SELECT_TOOL_NB_CHILDREN,
                    NULL,
@@ -216,7 +217,8 @@ static void select_bip39_phrase_length_callback(nbgl_obj_t *obj, nbgl_touchType_
 static void display_bip39_select_phrase_length_page(void) {
     nbgl_obj_t **screenChildren;
 
-    // 3 buttons + icon + text + subText
+    // From top to bottom:
+    // <return back arrow> + <icon> + <text> + <3 buttons>
     nbgl_screenSet(&screenChildren,
                    SELECT_BIP39_PHRASE_LENGTH_NB_CHILDREN,
                    NULL,
@@ -271,7 +273,6 @@ enum check {
 
 static char textToEnter[BIP39_MAX_WORD_LENGTH + 1] = {0};
 static int keyboardIndex = 0;
-static nbgl_layoutKeyboardContent_t kbdContent;
 // the biggest word of BIP39 list is 8 char (9 with trailing '\0'), and
 // the max number of showed suggestions is NB_MAX_SUGGESTION_BUTTONS
 static char wordCandidates[(BIP39_MAX_WORD_LENGTH + 1) * NB_MAX_SUGGESTION_BUTTONS] = {0};
@@ -282,6 +283,7 @@ static char wordCandidates[(BIP39_MAX_WORD_LENGTH + 1) * NB_MAX_SUGGESTION_BUTTO
 static void key_press_callback(const char touchedKey) {
     size_t textLen = 0;
     uint32_t mask = 0;
+    // Update word currently displayed
     const size_t previousTextLen = strlen(textToEnter);
     if (touchedKey == BACKSPACE_KEY) {
         if (previousTextLen == 0) {
@@ -294,10 +296,31 @@ static void key_press_callback(const char touchedKey) {
         textToEnter[previousTextLen + 1] = '\0';
         textLen = previousTextLen + 1;
     }
+
+    // Update the screen (written word, suggestions, ...)
+    nbgl_layoutSuggestionButtons_t suggestionButtons = {
+        .buttons = PIC(buttonTexts),
+        .firstButtonToken = CHECK_FIRST_SUGGESTION_TOKEN,
+        .nbUsedButtons = 0,
+    };
+    nbgl_layoutKeyboardContent_t keyboardContent = {
+        .type = KEYBOARD_WITH_SUGGESTIONS,
+        .title = PIC(headerText),
+        .text = PIC(textToEnter),
+        .numbered = true,
+        .number = onboarding_type == ONBOARDING_TYPE_BIP39
+                      ? bip39_mnemonic_current_word_number_get() + 1
+                      : sskr_shares_current_word_number_get() + 1,
+        .grayedOut = false,
+        .textToken = KBD_TEXT_TOKEN,
+        .suggestionButtons = suggestionButtons,
+        .tuneId = TUNE_TAP_CASUAL,
+    };
     PRINTF("Current text is: '%s' (size '%d')\n", textToEnter, textLen);
-    if (textLen == 0) {
-        // no suggestion until there is at least 2 characters
-        kbdContent.suggestionButtons.nbUsedButtons = 0;
+
+    if (textLen < 2) {
+        // Suggestions only when the word contains 2+ letters
+        nbgl_layoutUpdateKeyboardContent(layout, &keyboardContent);
     } else {
         const size_t nbMatchingWords =
             onboarding_type == ONBOARDING_TYPE_BIP39
@@ -309,7 +332,8 @@ static void key_press_callback(const char touchedKey) {
                                                      strlen(textToEnter),
                                                      wordCandidates,
                                                      buttonTexts);
-        kbdContent.suggestionButtons.nbUsedButtons = nbMatchingWords;
+        keyboardContent.suggestionButtons.nbUsedButtons = nbMatchingWords;
+        nbgl_layoutUpdateKeyboardContent(layout, &keyboardContent);
     }
     if (textLen > 0) {
         mask = onboarding_type == ONBOARDING_TYPE_BIP39
@@ -318,9 +342,9 @@ static void key_press_callback(const char touchedKey) {
                    : bolos_ux_sskr_get_keyboard_mask((unsigned char *) &(textToEnter[0]),
                                                      strlen(textToEnter));
     }
+    nbgl_layoutDraw(layout);
     nbgl_layoutUpdateKeyboard(layout, keyboardIndex, mask, false, LOWER_CASE);
-    nbgl_layoutUpdateKeyboardContent(layout, &kbdContent);
-    nbgl_refresh();
+    nbgl_refreshSpecialWithPostRefresh(BLACK_AND_WHITE_REFRESH, POST_REFRESH_FORCE_POWER_ON);
 }
 
 static void bip39_keyboard_dispatcher(const int token, uint8_t index) {
@@ -381,18 +405,6 @@ static void display_check_keyboard_page() {
                                 .mode = MODE_LETTERS,  // start in letters mode
                                 .keyMask = 0,          // no inactive key
                                 .callback = &key_press_callback};
-    kbdContent.type = KEYBOARD_WITH_SUGGESTIONS;
-    kbdContent.title = headerText;
-    kbdContent.text = textToEnter;
-    kbdContent.numbered = true;
-    kbdContent.number = onboarding_type == ONBOARDING_TYPE_BIP39
-                            ? bip39_mnemonic_current_word_number_get() + 1
-                            : sskr_shares_current_word_number_get() + 1;
-    kbdContent.grayedOut = false;
-    kbdContent.textToken = KBD_TEXT_TOKEN;
-    kbdContent.suggestionButtons.buttons = buttonTexts;
-    kbdContent.suggestionButtons.firstButtonToken = CHECK_FIRST_SUGGESTION_TOKEN;
-    kbdContent.suggestionButtons.nbUsedButtons = 0;  // no used buttons at start-up
     textToEnter[0] = '\0';
     memzero(buttonTexts, sizeof(buttonTexts[0]) * NB_MAX_SUGGESTION_BUTTONS);
     layout = nbgl_layoutGet(&layoutDescription);
@@ -409,9 +421,35 @@ static void display_check_keyboard_page() {
                  sskr_shareindex_get() + 1,
                  sskr_shares_current_word_number_get() + 1);
     }
+
+    nbgl_layoutHeader_t headerDesc = {.type = HEADER_BACK_AND_TEXT,
+                                      .separationLine = false,
+                                      .backAndText.token = CHECK_BACK_BUTTON_TOKEN,
+                                      .backAndText.tuneId = TUNE_TAP_CASUAL,
+                                      .backAndText.text = NULL};
+    nbgl_layoutAddHeader(layout, &headerDesc);
+
     keyboardIndex = nbgl_layoutAddKeyboard(layout, &kbdInfo);
-    nbgl_layoutAddProgressIndicator(layout, 0, 0, true, CHECK_BACK_BUTTON_TOKEN, TUNE_TAP_CASUAL);
-    nbgl_layoutAddKeyboardContent(layout, &kbdContent);
+
+    nbgl_layoutSuggestionButtons_t suggestionButtons = {
+        .buttons = PIC(buttonTexts),
+        .firstButtonToken = CHECK_FIRST_SUGGESTION_TOKEN,
+        .nbUsedButtons = 0,
+    };
+    nbgl_layoutKeyboardContent_t keyboardContent = {
+        .type = KEYBOARD_WITH_SUGGESTIONS,
+        .title = PIC(headerText),
+        .text = PIC(textToEnter),
+        .numbered = true,
+        .number = onboarding_type == ONBOARDING_TYPE_BIP39
+                      ? bip39_mnemonic_current_word_number_get() + 1
+                      : sskr_shares_current_word_number_get() + 1,
+        .grayedOut = false,
+        .textToken = KBD_TEXT_TOKEN,
+        .suggestionButtons = suggestionButtons,
+        .tuneId = TUNE_TAP_CASUAL,
+    };
+    nbgl_layoutAddKeyboardContent(layout, &keyboardContent);
     nbgl_layoutDraw(layout);
 }
 
@@ -440,6 +478,12 @@ static void display_home_page() {
         on_quit);
 }
 
+#if defined(TARGET_STAX)
+#define DEVICE "Ledger Stax"
+#elif defined(TARGET_FLEX)
+#define DEVICE "Ledger Flex"
+#endif
+
 /*
  * Result page
  */
@@ -459,11 +503,11 @@ static void display_check_result_page(const bool result) {
     static const char *possible_results[2][3] = {
         {"Incorrect Secret\nRecovery Phrase",
          "The BIP39 Recovery Phrase\nyou have entered\ndoesn't match the one present\n"
-         "on this Ledger Stax.",
+         "on this " DEVICE ".",
          "The SSKR Recovery Phrase\nyou have entered is not valid"},
         {"Correct Secret\nRecovery Phrase",
          "The BIP39 Recovery Phrase\nyou have entered\nmatches the one present\n"
-         "on this Ledger Stax.",
+         "on this " DEVICE ".",
          "The SSKR Recovery Phrase\nyou have entered is valid"}};
     static const nbgl_icon_details_t *icons[2] = {&C_Warning_64px, &C_Check_Circle_64px};
 

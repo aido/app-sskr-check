@@ -16,7 +16,7 @@
 
 #pragma once
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
 #define memzero(...) explicit_bzero(__VA_ARGS__)
 
@@ -102,4 +102,4 @@ char* sskr_shares_get(void);
  */
 size_t sskr_shares_length_get(void);
 
-#endif  // TARGET_STAX
+#endif  // SCREEN_SIZE_WALLET

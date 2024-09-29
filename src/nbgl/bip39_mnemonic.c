@@ -1,12 +1,12 @@
 #include <os.h>
 #include <string.h>
 
-#include "../ux_common/common_bip39.h"
-#include "../ux_common/common_sskr.h"
+#include "../common/bip39/common_bip39.h"
+#include "../common/sskr/common_sskr.h"
 #include "./bip39_mnemonic.h"
 #include "./sskr_shares.h"
 
-#if defined(TARGET_STAX)
+#if defined(SCREEN_SIZE_WALLET)
 
 typedef struct bip39_buffer_struct {
     // the mnemonic passphrase, built over time

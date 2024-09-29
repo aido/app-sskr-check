@@ -6,8 +6,8 @@
 #include <string.h>
 
 #include "testutils.h"
-#include "common_bip39.h"
-#include "common_sskr.h"
+#include "bip39/common_bip39.h"
+#include "sskr/common_sskr.h"
 
 static void test_words_bip39(void **state) {
     unsigned char next_letters[27] = {0};

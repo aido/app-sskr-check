@@ -60,8 +60,8 @@
 
 #include "testutils.h"
 #include "constants.h"
-#include "common_bip39.h"
-#include "common_sskr.h"
+#include "bip39/common_bip39.h"
+#include "sskr/common_sskr.h"
 
 const unsigned char bip39_mnemonic[] = "toe priority custom gauge jacket theme arrest bargain gloom wide ill fit eagle prepare capable fish limb cigar reform other priority speak rough imitate";
 

@@ -19,7 +19,7 @@
 #include "constants.h"
 #include "ui.h"
 
-#if defined(TARGET_NANOS) || defined(TARGET_NANOX) || defined(TARGET_NANOS2)
+#if defined(HAVE_BAGL)
 
 bool get_next_data(bool share_step) {
     if (G_bolos_ux_context.sskr_share_index >= 1 &&
@@ -176,10 +176,10 @@ const char* const sskr_descriptor_values[] = {"1",
                                               "5",
                                               "6",
                                               "7",
+#ifndef TARGET_NANOS
                                               "8",
                                               "9",
                                               "10",
-#ifndef TARGET_NANOS
                                               "11",
                                               "12",
                                               "13",
@@ -243,4 +243,4 @@ void set_sskr_descriptor_values(void) {
     ux_flow_init(0, ux_shares_number_flow, NULL);
 }
 
-#endif
+#endif  // defined(HAVE_BAGL)
