@@ -17,6 +17,7 @@
 #pragma once
 
 #include <ux.h>
+#include "ui.h"
 #include "../common/common.h"
 
 #if defined(HAVE_BAGL)
@@ -32,9 +33,11 @@ void bolos_ux_hslider3_previous(void);
 void screen_onboarding_bip39_restore_init(void);
 void screen_onboarding_sskr_restore_init(void);
 void screen_onboarding_restore_word_init(unsigned int action);
+void screen_onboarding_restore_word_display_auto_complete(void);
 
 // bolos ux context (not mandatory if redesigning a bolos ux)
 typedef struct bolos_ux_context {
+    // 12, 18 or 24 word BIP39 onboarding kind
     unsigned int onboarding_kind;
 
     // Type of onboarding we are performing (BIP39 or SSKR)
@@ -122,7 +125,7 @@ void clean_exit(bolos_task_status_t exit_code);
 #define PROCESSING_GENERATE_SSKR           2
 
 extern const bagl_element_t screen_onboarding_word_list_elements[9];
-void compare_recovery_phrase(void);
+void compare_recovery_phrase_and_display_result(void);
 void generate_sskr(void);
 void screen_processing_init(void);
 #else

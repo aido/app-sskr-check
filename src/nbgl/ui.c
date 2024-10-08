@@ -273,6 +273,7 @@ enum check {
 
 static char textToEnter[BIP39_MAX_WORD_LENGTH + 1] = {0};
 static int keyboardIndex = 0;
+static bool seed_match = false;
 // the biggest word of BIP39 list is 8 char (9 with trailing '\0'), and
 // the max number of showed suggestions is NB_MAX_SUGGESTION_BUTTONS
 static char wordCandidates[(BIP39_MAX_WORD_LENGTH + 1) * NB_MAX_SUGGESTION_BUTTONS] = {0};
@@ -365,7 +366,7 @@ static void bip39_keyboard_dispatcher(const int token, uint8_t index) {
         bip39_mnemonic_word_add(buttonTexts[token - CHECK_FIRST_SUGGESTION_TOKEN],
                                 strlen(buttonTexts[token - CHECK_FIRST_SUGGESTION_TOKEN]));
         if (bip39_mnemonic_complete_check()) {
-            display_check_result_page(bip39_mnemonic_check());
+            display_check_result_page(bip39_mnemonic_check(&seed_match));
         } else {
             display_check_keyboard_page();
         }
@@ -389,7 +390,7 @@ static void sskr_keyboard_dispatcher(const int token, uint8_t index) {
                strlen(buttonTexts[token - CHECK_FIRST_SUGGESTION_TOKEN]));
         sskr_shares_word_add(buttonTexts[token - CHECK_FIRST_SUGGESTION_TOKEN]);
         if (sskr_shares_complete_check()) {
-            display_check_result_page(sskr_shares_check());
+            display_check_result_page(sskr_shares_check(&seed_match));
         } else {
             display_check_keyboard_page();
         }
@@ -489,9 +490,10 @@ static void display_home_page() {
  */
 static void check_result_callback(int token __attribute__((unused)),
                                   uint8_t index __attribute__((unused))) {
-    if (onboarding_type == ONBOARDING_TYPE_BIP39 && bip39_mnemonic_check()) {
+    if (onboarding_type == ONBOARDING_TYPE_BIP39 && bip39_mnemonic_check(&seed_match) &&
+        seed_match) {
         display_select_generate_sskr_page();
-    } else if (onboarding_type == ONBOARDING_TYPE_SSKR && sskr_shares_check()) {
+    } else if (onboarding_type == ONBOARDING_TYPE_SSKR && sskr_shares_check(&seed_match)) {
         display_select_recover_bip39_page();
     } else {
         reset_globals();
@@ -500,21 +502,27 @@ static void check_result_callback(int token __attribute__((unused)),
 }
 
 static void display_check_result_page(const bool result) {
-    static const char *possible_results[2][3] = {
-        {"Incorrect Secret\nRecovery Phrase",
+    static const char *possible_results[2][5] = {
+        {"Invalid Secret\nRecovery Phrase",
+         "The BIP39 Recovery Phrase\nyou have entered is not valid",
+         "",
+         "The SSKR Recovery Phrase\nyou have entered is not valid",
+         ""},
+        {"Valid Secret\nRecovery Phrase",
          "The BIP39 Recovery Phrase\nyou have entered\ndoesn't match the one present\n"
          "on this " DEVICE ".",
-         "The SSKR Recovery Phrase\nyou have entered is not valid"},
-        {"Correct Secret\nRecovery Phrase",
          "The BIP39 Recovery Phrase\nyou have entered\nmatches the one present\n"
          "on this " DEVICE ".",
-         "The SSKR Recovery Phrase\nyou have entered is valid"}};
+         "The SSKR Recovery Phrase\nyou have entered\ndoesn't match the one present\n"
+         "on this " DEVICE ".",
+         "The SSKR Recovery Phrase\nyou have entered\nmatches the one present\n"
+         "on this " DEVICE "."}};
     static const nbgl_icon_details_t *icons[2] = {&C_Warning_64px, &C_Check_Circle_64px};
 
     nbgl_pageInfoDescription_t info = {
         .centeredInfo.icon = icons[result],
         .centeredInfo.text1 = possible_results[result][0],
-        .centeredInfo.text2 = possible_results[result][1 + onboarding_type],
+        .centeredInfo.text2 = possible_results[result][1 + (onboarding_type * 2) + seed_match],
         .centeredInfo.text3 = NULL,
         .centeredInfo.style = LARGE_CASE_INFO,
         .centeredInfo.offsetY = -16,
@@ -591,9 +599,7 @@ static void review_done(void) {
     display_home_page();
 }
 
-static void display_bip39_mnemonic(void) {
-    bip39_mnemonic_from_sskr_shares();
-
+static void display_bip39_mnemonic() {
     static nbgl_layoutTagValue_t pairs[1];
     static const nbgl_content_t content[1] = {
         {.type = TAG_VALUE_LIST,

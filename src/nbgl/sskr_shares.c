@@ -1,6 +1,7 @@
 #include <os.h>
 #include <string.h>
 
+#include "../common/common.h"
 #include "../common/sskr/common_sskr.h"
 #include "./sskr_shares.h"
 #include "./bip39_mnemonic.h"
@@ -157,7 +158,7 @@ bool sskr_shares_complete_check(void) {
     return true;
 }
 
-bool sskr_shares_check(void) {
+bool sskr_shares_check(bool* match) {
     if (!sskr_shares_complete_check()) {
         return false;
     }
@@ -167,14 +168,18 @@ bool sskr_shares_check(void) {
            &shares.buffer[0],
            shares.length);
 
-    const bool result = bolos_ux_sskr_hex_check((unsigned char*) sskr_shares_get(),
-                                                sskr_shares_length_get(),
-                                                sskr_sharecount_get());
+    if (bolos_ux_sskr_hex_check((unsigned char*) sskr_shares_get(),
+                                sskr_shares_length_get(),
+                                sskr_sharecount_get()) == false) {
+        sskr_shares_reset();
+        return false;
+    }
 
+    *match = compare_recovery_phrase();
     // Don't clear the shares just yet as we may need it to generate BIP39 mnemonic
-    // sskr_shares_reset();
+    //    sskr_shares_reset();
 
-    return result;
+    return true;
 }
 
 char* sskr_shares_get(void) {

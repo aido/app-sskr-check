@@ -23,9 +23,6 @@
 // 16 shares * 229 chars per share (46 SSKR ByteWords)
 #define SSKR_SHARES_MAX_LENGTH 3664
 
-// All ByteWords have uniform length of 4
-#define SSKR_BYTEWORD_LENGTH 4
-
 /*
  * Remove the latest word from the shares, returns true if there was at least one to remove,
  * else false (there was no word)
@@ -50,7 +47,7 @@ bool sskr_shares_complete_check(void);
 /*
  * Check if the currently stored mnemonic generates the same seed as the current device's one
  */
-bool sskr_shares_check(void);
+bool sskr_shares_check(bool* match);
 
 /*
  * Sets the number of SSKR shares

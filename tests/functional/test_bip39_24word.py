@@ -580,7 +580,7 @@ def stax_bip39_24word(backend):
     backend.finger_touch(300, 464, 1) # i
     backend.finger_touch(180, 464, 1) # t
     backend.finger_touch(100, 280, 1)
-    backend.wait_for_text_on_screen("Correct Secret", 5)
+    backend.wait_for_text_on_screen("Valid Secret", 5)
     backend.wait_for_text_on_screen("Recovery Phrase", 1)
     backend.finger_touch(200, 630, 1)
     backend.wait_for_text_on_screen("Generate SSKR", 5)

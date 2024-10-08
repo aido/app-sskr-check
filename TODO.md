@@ -10,6 +10,7 @@
 ### In Progress
 
 - [ ] Decouple BAGL / NBGL code
+- [ ] Add BIP85 menus to Stax and Flex
 
 ### Done ✓
 

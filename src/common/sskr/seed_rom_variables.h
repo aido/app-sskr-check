@@ -17,8 +17,8 @@
 #pragma once
 
 #define SSKR_WORDLIST_LENGTH 1024
+
+// All ByteWords have uniform length of 4
 #define SSKR_BYTEWORD_LENGTH 4
 
 extern unsigned char const WIDE SSKR_WORDLIST[SSKR_WORDLIST_LENGTH];
-extern unsigned short const WIDE SSKR_WORDLIST_OFFSET;
-extern unsigned char const WIDE SSKR_BYTEWORD[SSKR_BYTEWORD_LENGTH];

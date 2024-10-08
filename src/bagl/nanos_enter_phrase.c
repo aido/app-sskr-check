@@ -26,8 +26,8 @@
 #define RESTORE_BIP39_WORD_MAX_BACKWARD_STEPS 24
 #define RESTORE_SSKR_WORD_MAX_BACKWARD_STEPS  46
 
-const bagl_element_t* screen_onboarding_restore_word_before_element_display_callback(
-    const bagl_element_t* element);
+const bagl_element_t *screen_onboarding_restore_word_before_element_display_callback(
+    const bagl_element_t *element);
 
 const bagl_element_t screen_onboarding_word_list_elements[] = {
     // erase
@@ -64,13 +64,14 @@ const bagl_element_t screen_onboarding_word_list_elements[] = {
      G_ux.string_buffer},
 
     // left/rights icons
-    {{BAGL_ICON, 0x03, 3, 12, 4, 7, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0}, (const char*) &C_icon_left},
+    {{BAGL_ICON, 0x03, 3, 12, 4, 7, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0},
+     (const char *) &C_icon_left},
     {{BAGL_ICON, 0x04, 121, 12, 4, 7, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0},
-     (const char*) &C_icon_right},
+     (const char *) &C_icon_right},
 
     // supplementary static entry
     {{BAGL_ICON, 0x05, 16, 9, 14, 14, 0, 0, 0, 0xFFFFFF, 0x000000, 0, 0},
-     (const char*) &C_icon_back},
+     (const char *) &C_icon_back},
     {{BAGL_LABELINE,
       0x05,
       41,
@@ -103,71 +104,13 @@ const bagl_element_t screen_onboarding_word_list_elements[] = {
 
 void screen_onboarding_restore_word_display_auto_complete(void);
 
-UX_STEP_CB(ux_restore_step_1, nn, screen_onboarding_restore_word_display_auto_complete();
-           , {"Enter", G_ux.string_buffer});
-
-UX_FLOW(ux_restore_flow, &ux_restore_step_1);
-
-UX_STEP_CB(ux_bip39_invalid_step_1, pbb, screen_onboarding_bip39_restore_init();
-           , {&C_icon_warning, "BIP39 Recovery", "phrase invalid"});
-
-UX_FLOW(ux_bip39_invalid_flow, &ux_bip39_invalid_step_1);
-
-UX_STEP_NOCB(ux_bip39_nomatch_step_1, pbb, {&C_icon_warning, "BIP39 Phrase", "doesn't match"});
-UX_STEP_NOCB(ux_bip39_nomatch_step_2,
-             nn,
-             {
-                 "Check length",
-                 "order and spelling",
-             });
-UX_STEP_VALID(ux_bip39_nomatch_step_3, pb, ui_idle_init(), {&C_icon_back_x, "Return to menu"});
-
-UX_FLOW(ux_bip39_nomatch_flow,
-        &ux_bip39_nomatch_step_1,
-        &ux_bip39_nomatch_step_2,
-        &ux_bip39_nomatch_step_3);
-
-UX_STEP_VALID(ux_bip39_match_step_1,
-              pbb,
-              clean_exit(0),
-              {&C_icon_validate_14, "BIP39 Phrase", "is correct"});
-UX_STEP_CB(ux_bip39_match_step_2, pb, clean_exit(0), {&C_icon_dashboard_x, "Quit"});
-UX_STEP_CB(ux_bip39_recover_step_1, pbb, set_sskr_descriptor_values();
-           , {&SSKR_ICON, "Generate", "SSKR phrases"});
-
-UX_FLOW(ux_bip39_match_flow,
-        &ux_bip39_match_step_1,
-        &ux_bip39_match_step_2,
-        &ux_bip39_recover_step_1);
-
-UX_STEP_CB(ux_sskr_invalid_step_1, pbb, screen_onboarding_sskr_restore_init();
-           , {&C_icon_warning, "SSKR Recovery", "phrase invalid"});
-
-UX_FLOW(ux_sskr_invalid_flow, &ux_sskr_invalid_step_1);
-
-UX_STEP_NOCB(ux_sskr_nomatch_step_1, pbb, {&C_icon_warning, "SSKR Phrase", "doesn't match"});
-UX_STEP_NOCB(ux_sskr_nomatch_step_2,
-             nn,
-             {
-                 "Check length",
-                 "order and spelling",
-             });
-UX_STEP_VALID(ux_sskr_nomatch_step_3, pb, ui_idle_init(), {&C_icon_back_x, "Return to menu"});
-
-UX_FLOW(ux_sskr_nomatch_flow,
-        &ux_sskr_nomatch_step_1,
-        &ux_sskr_nomatch_step_2,
-        &ux_sskr_nomatch_step_3,
-        &ux_bip39_recover_step_1);
-
-UX_STEP_VALID(ux_sskr_match_step_1,
-              pbb,
-              clean_exit(0),
-              {&C_icon_validate_14, "SSKR Phrase", "is correct"});
-UX_STEP_CB(ux_sskr_match_step_2, pb, clean_exit(0), {&C_icon_dashboard_x, "Quit"});
-UX_STEP_CB(ux_sskr_match_step_3, pbb, recover_bip39();, {&BIP39_ICON, "Recover", "BIP39 phrase"});
-
-UX_FLOW(ux_sskr_match_flow, &ux_sskr_match_step_1, &ux_sskr_match_step_2, &ux_sskr_match_step_3);
+extern const ux_flow_step_t *const ux_bip39_match_flow;
+extern const ux_flow_step_t *const ux_sskr_match_flow;
+extern const ux_flow_step_t *const ux_bip39_nomatch_flow;
+extern const ux_flow_step_t *const ux_sskr_nomatch_flow;
+extern const ux_flow_step_t *const ux_bip39_invalid_flow;
+extern const ux_flow_step_t *const ux_sskr_invalid_flow;
+extern const ux_flow_step_t *const ux_restore_flow;
 
 void screen_processing_postinit(unsigned int stack_slot) {
     // ensure when pin is modal over the processing screen( at end of install) the processing screen
@@ -194,19 +137,19 @@ unsigned int screen_onboarding_restore_word_select_button(unsigned int button_ma
 
 #define ITEMS (G_ux.string_buffer + 32)
 
-const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned int event,
+const bagl_element_t *screen_onboarding_restore_word_keyboard_callback(unsigned int event,
                                                                        unsigned int value);
 
 void screen_onboarding_restore_word_display_auto_complete(void) {
     unsigned int auto_complete_count = (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39
                                             ? bolos_ux_bip39_get_word_next_letters_starting_with(
-                                                  (unsigned char*) G_ux.string_buffer + 16,
+                                                  (unsigned char *) G_ux.string_buffer + 16,
                                                   strlen(G_ux.string_buffer + 16),
-                                                  (unsigned char*) G_ux.string_buffer + 32)
+                                                  (unsigned char *) G_ux.string_buffer + 32)
                                             : bolos_ux_sskr_get_word_next_letters_starting_with(
-                                                  (unsigned char*) G_ux.string_buffer + 16,
+                                                  (unsigned char *) G_ux.string_buffer + 16,
                                                   strlen(G_ux.string_buffer + 16),
-                                                  (unsigned char*) G_ux.string_buffer + 32));
+                                                  (unsigned char *) G_ux.string_buffer + 32));
 
     // display added letter and refresh slider
     screen_common_keyboard_init(
@@ -221,7 +164,7 @@ void screen_onboarding_restore_word_display_auto_complete(void) {
                  : 0) /* backspace if already a stem entered, else no backspace */,
         screen_onboarding_restore_word_keyboard_callback);
     // append the special backspace to allow for easier dispatch in the keyboard callback
-    ((unsigned char*) (G_ux.string_buffer + 32))[auto_complete_count] = '\b';
+    ((unsigned char *) (G_ux.string_buffer + 32))[auto_complete_count] = '\b';
 }
 
 void screen_onboarding_restore_word_display_word_selection(void) {
@@ -237,7 +180,7 @@ void screen_onboarding_restore_word_display_word_selection(void) {
     ux_stack_display(0);
 }
 
-const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned int event,
+const bagl_element_t *screen_onboarding_restore_word_keyboard_callback(unsigned int event,
                                                                        unsigned int value) {
     switch (event) {
         case KEYBOARD_ITEM_VALIDATED:
@@ -256,10 +199,10 @@ const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned 
                 G_bolos_ux_context.onboarding_words_checked =
                     G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39
                         ? bolos_ux_bip39_get_word_count_starting_with(
-                              (unsigned char*) G_ux.string_buffer + 16,
+                              (unsigned char *) G_ux.string_buffer + 16,
                               strlen(G_ux.string_buffer + 16))
                         : bolos_ux_sskr_get_word_count_starting_with(
-                              (unsigned char*) G_ux.string_buffer + 16,
+                              (unsigned char *) G_ux.string_buffer + 16,
                               strlen(G_ux.string_buffer + 16));
                 if (G_bolos_ux_context.onboarding_words_checked >
                     ONBOARDING_WORD_COMPLETION_MAX_ITEMS) {
@@ -271,10 +214,10 @@ const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned 
                     G_bolos_ux_context.onboarding_index =
                         G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39
                             ? bolos_ux_bip39_get_word_idx_starting_with(
-                                  (unsigned char*) G_ux.string_buffer + 16,
+                                  (unsigned char *) G_ux.string_buffer + 16,
                                   strlen(G_ux.string_buffer + 16))
                             : bolos_ux_sskr_get_word_idx_starting_with(
-                                  (unsigned char*) G_ux.string_buffer + 16,
+                                  (unsigned char *) G_ux.string_buffer + 16,
                                   strlen(G_ux.string_buffer + 16));
 
                     // multiple possibilities
@@ -307,7 +250,7 @@ const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned 
                 G_ux.tmp_element.component.type = BAGL_ICON;
                 G_ux.tmp_element.component.icon_id = 0;
                 // if current selected, then display the inversed digit (as in a pin digit)
-                G_ux.tmp_element.text = (const char*) &C_icon_backspace;
+                G_ux.tmp_element.text = (const char *) &C_icon_backspace;
             } else {
                 // G_ux.string_buffer[0] = G_ux.string_buffer[32+value]-'a'+'A'; // render as
                 // uppercase, always
@@ -344,8 +287,8 @@ const bagl_element_t* screen_onboarding_restore_word_keyboard_callback(unsigned 
     return &G_ux.tmp_element;
 }
 
-const bagl_element_t* screen_onboarding_restore_word_before_element_display_callback(
-    const bagl_element_t* element) {
+const bagl_element_t *screen_onboarding_restore_word_before_element_display_callback(
+    const bagl_element_t *element) {
     switch (element->component.userid) {
         case 0x01:
             if (G_bolos_ux_context.hslider3_total == 0 ||
@@ -366,10 +309,10 @@ const bagl_element_t* screen_onboarding_restore_word_before_element_display_call
             (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39)
                 ? bolos_ux_bip39_idx_strcpy(
                       G_bolos_ux_context.onboarding_index + G_bolos_ux_context.hslider3_current,
-                      (unsigned char*) G_ux.string_buffer)
+                      (unsigned char *) G_ux.string_buffer)
                 : bolos_ux_sskr_idx_strcpy(
                       G_bolos_ux_context.onboarding_index + G_bolos_ux_context.hslider3_current,
-                      (unsigned char*) G_ux.string_buffer);
+                      (unsigned char *) G_ux.string_buffer);
             break;
 
         case 0x03:
@@ -408,63 +351,18 @@ const bagl_element_t* screen_onboarding_restore_word_before_element_display_call
     return element;
 }
 
-void compare_recovery_phrase(void) {
+void compare_recovery_phrase_and_display_result(void) {
     G_bolos_ux_context.processing = PROCESSING_COMPLETE;
     io_seproxyhal_general_status();
 
-    cx_err_t error = CX_OK;  // By default, until some error occurs
-    uint8_t buffer[64] = {0};
-    uint8_t buffer_device[64] = {0};
-
-    // convert mnemonic to hex-seed
-    if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39) {
-        bolos_ux_bip39_mnemonic_to_seed((unsigned char*) G_bolos_ux_context.words_buffer,
-                                        G_bolos_ux_context.words_buffer_length,
-                                        buffer);
-    } else if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_SSKR) {
-        G_bolos_ux_context.words_buffer_length = sizeof(G_bolos_ux_context.words_buffer);
-        bolos_ux_sskr_to_seed_convert((unsigned char*) G_bolos_ux_context.sskr_words_buffer,
-                                      G_bolos_ux_context.sskr_words_buffer_length,
-                                      G_bolos_ux_context.sskr_share_count,
-                                      (unsigned char*) &G_bolos_ux_context.words_buffer,
-                                      &G_bolos_ux_context.words_buffer_length,
-                                      buffer);
-    }
-
-    // get rootkey from hex-seed
-    cx_hmac_sha512_t ctx;
-    const char key[] = "Bitcoin seed";
-
-    CX_ASSERT(cx_hmac_sha512_init_no_throw(&ctx, (const uint8_t*) key, strlen(key)));
-    CX_ASSERT(cx_hmac_no_throw((cx_hmac_t*) &ctx, CX_LAST, buffer, 64, buffer, 64));
-    PRINTF("Root key from input:\n%.*H\n", 64, buffer);
-
-    // get rootkey from device's seed
-    // os_derive_bip32* do not accept NULL path, even with a size of 0, so we provide an empty path
-    const unsigned int empty_path = 0;
-
-    CX_CHECK(os_derive_bip32_no_throw(CX_CURVE_256K1,
-                                      &empty_path,
-                                      0,
-                                      buffer_device,
-                                      buffer_device + 32));
-    PRINTF("Root key from device: \n%.*H\n", 64, buffer_device);
-
-    // compare both rootkey
-    CX_CHECK(os_secure_memcmp(buffer, buffer_device, 64));
-
-end:
-    memzero(buffer, 64);
-    memzero(buffer_device, 64);
-
-    if (error != CX_OK) {
+    if (compare_recovery_phrase()) {
         (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39)
-            ? ux_flow_init(0, ux_bip39_nomatch_flow, NULL)
-            : ux_flow_init(0, ux_sskr_nomatch_flow, NULL);
+            ? ux_flow_init(0, &ux_bip39_match_flow, NULL)
+            : ux_flow_init(0, &ux_sskr_match_flow, NULL);
     } else {
         (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39)
-            ? ux_flow_init(0, ux_bip39_match_flow, NULL)
-            : ux_flow_init(0, ux_sskr_match_flow, NULL);
+            ? ux_flow_init(0, &ux_bip39_nomatch_flow, NULL)
+            : ux_flow_init(0, &ux_sskr_nomatch_flow, NULL);
     }
 }
 
@@ -472,8 +370,8 @@ void screen_onboarding_restore_word_validate(void) {
     if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39) {
         bolos_ux_bip39_idx_strcpy(
             G_bolos_ux_context.onboarding_index + G_bolos_ux_context.hslider3_current,
-            (unsigned char*) (G_bolos_ux_context.words_buffer +
-                              G_bolos_ux_context.words_buffer_length));
+            (unsigned char *) (G_bolos_ux_context.words_buffer +
+                               G_bolos_ux_context.words_buffer_length));
         G_bolos_ux_context.words_buffer_length = strlen(G_bolos_ux_context.words_buffer);
     } else if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_SSKR) {
         G_bolos_ux_context.sskr_words_buffer[G_bolos_ux_context.sskr_words_buffer_length] =
@@ -535,19 +433,19 @@ void screen_onboarding_restore_word_validate(void) {
             if (G_bolos_ux_context.onboarding_algorithm == BOLOS_UX_ONBOARDING_ALGORITHM_ELECTRUM) {
                 valid = bolos_ux_electrum_bip39_mnemonic_check(
                     ELECTRUM_SEED_PREFIX_STANDARD,
-                    (unsigned char*) G_bolos_ux_context.words_buffer,
+                    (unsigned char *) G_bolos_ux_context.words_buffer,
                     G_bolos_ux_context.words_buffer_length);
             } else {
                 valid =
-                    bolos_ux_bip39_mnemonic_check((unsigned char*) G_bolos_ux_context.words_buffer,
+                    bolos_ux_bip39_mnemonic_check((unsigned char *) G_bolos_ux_context.words_buffer,
                                                   G_bolos_ux_context.words_buffer_length);
             }
 #else
-            valid = bolos_ux_bip39_mnemonic_check((unsigned char*) G_bolos_ux_context.words_buffer,
+            valid = bolos_ux_bip39_mnemonic_check((unsigned char *) G_bolos_ux_context.words_buffer,
                                                   G_bolos_ux_context.words_buffer_length);
 #endif
             if (!valid) {
-                ux_flow_init(0, ux_bip39_invalid_flow, NULL);
+                ux_flow_init(0, &ux_bip39_invalid_flow, NULL);
             } else {
                 // alright, the recovery phrase looks ok, finish onboarding
                 // Display processing warning to user
@@ -576,11 +474,11 @@ void screen_onboarding_restore_word_validate(void) {
             } else {
                 unsigned int valid;
                 valid =
-                    bolos_ux_sskr_hex_check((unsigned char*) G_bolos_ux_context.sskr_words_buffer,
+                    bolos_ux_sskr_hex_check((unsigned char *) G_bolos_ux_context.sskr_words_buffer,
                                             G_bolos_ux_context.sskr_words_buffer_length,
                                             G_bolos_ux_context.sskr_share_count);
                 if (!valid) {
-                    ux_flow_init(0, ux_sskr_invalid_flow, NULL);
+                    ux_flow_init(0, &ux_sskr_invalid_flow, NULL);
                 } else {
                     // alright, the recovery phrase looks ok, finish onboarding
                     // Display processing warning to user
@@ -707,7 +605,7 @@ void screen_onboarding_restore_word_init(unsigned int action) {
                   "Share#%d Word#%d",
                   G_bolos_ux_context.sskr_share_index + 1,
                   G_bolos_ux_context.onboarding_step + 1);
-    ux_flow_init(0, ux_restore_flow, NULL);
+    ux_flow_init(0, &ux_restore_flow, NULL);
 }
 
 #endif

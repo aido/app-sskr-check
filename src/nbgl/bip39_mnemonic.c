@@ -1,6 +1,7 @@
 #include <os.h>
 #include <string.h>
 
+#include "../common/common.h"
 #include "../common/bip39/common_bip39.h"
 #include "../common/sskr/common_sskr.h"
 #include "./bip39_mnemonic.h"
@@ -85,31 +86,36 @@ bool bip39_mnemonic_complete_check(void) {
                 : (mnemonic.current_word_index + 1) >= bip39_mnemonic_final_size_get());
 }
 
-bool bip39_mnemonic_check(void) {
+bool bip39_mnemonic_check(bool* match) {
     if (!bip39_mnemonic_complete_check()) {
         return false;
     }
     PRINTF("Checking the following mnemonic: '%s' (size %d)\n",
            &mnemonic.buffer[0],
            mnemonic.length);
-    const bool result =
-        bolos_ux_bip39_mnemonic_check((unsigned char*) &mnemonic.buffer[0], mnemonic.length);
+
+    if (bolos_ux_bip39_mnemonic_check((unsigned char*) &mnemonic.buffer[0], mnemonic.length) ==
+        false) {
+        bip39_mnemonic_reset();
+        return false;
+    }
+
+    *match = compare_recovery_phrase();
     // Don't clear the mnemonic just yet as we may need it to generate SSKR shares
     //    bip39_mnemonic_reset();
-    return result;
+
+    return true;
 }
 
-void bip39_mnemonic_from_sskr_shares(void) {
+void bip39_mnemonic_from_sskr_shares(unsigned char* seed) {
     mnemonic.length = BIP39_MNEMONIC_MAX_LENGTH;
-    uint8_t buffer[64] = {0};
 
     bolos_ux_sskr_to_seed_convert((const unsigned char*) sskr_shares_get(),
                                   sskr_shares_length_get(),
                                   sskr_sharecount_get(),
                                   (const unsigned char*) bip39_mnemonic_get(),
                                   &mnemonic.length,
-                                  buffer);
-    memzero(buffer, sizeof(buffer));
+                                  seed);
 
     if (mnemonic.length > 0) {
         PRINTF("BIP39 mnemonic: %.*s\n", mnemonic.length, bip39_mnemonic_get());

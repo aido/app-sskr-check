@@ -1080,7 +1080,7 @@ def stax_sskr_128bit(backend):
     backend.finger_touch(340, 464, 1) # o
     backend.finger_touch(80, 520, 1) # s
     backend.finger_touch(100, 280, 1)
-    backend.wait_for_text_on_screen("Correct Secret", 5)
+    backend.wait_for_text_on_screen("Valid Secret", 5)
     backend.wait_for_text_on_screen("Recovery Phrase", 1)
     backend.finger_touch(200, 630, 1)
     backend.wait_for_text_on_screen("Recover BIP39", 5)
