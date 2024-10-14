@@ -29,7 +29,7 @@
 const bagl_element_t *screen_onboarding_restore_word_before_element_display_callback(
     const bagl_element_t *element);
 
-const bagl_element_t screen_onboarding_word_list_elements[] = {
+const bagl_element_t screen_onboarding_restore_word_select_elements[] = {
     // erase
     {{BAGL_RECTANGLE, 0x00, 0, 0, 128, 32, 0, 0, BAGL_FILL, 0x000000, 0xFFFFFF, 0, 0}, NULL},
 
@@ -135,8 +135,6 @@ void screen_processing_init(void) {
 unsigned int screen_onboarding_restore_word_select_button(unsigned int button_mask,
                                                           unsigned int button_mask_counter);
 
-#define ITEMS (G_ux.string_buffer + 32)
-
 const bagl_element_t *screen_onboarding_restore_word_keyboard_callback(unsigned int event,
                                                                        unsigned int value);
 
@@ -170,10 +168,9 @@ void screen_onboarding_restore_word_display_auto_complete(void) {
 void screen_onboarding_restore_word_display_word_selection(void) {
     ux_stack_init(0);
     G_ux.stack[0].button_push_callback = screen_onboarding_restore_word_select_button;
-    G_ux.stack[0].element_arrays[0].element_array = screen_onboarding_word_list_elements;
+    G_ux.stack[0].element_arrays[0].element_array = screen_onboarding_restore_word_select_elements;
     G_ux.stack[0].element_arrays[0].element_array_count =
-        sizeof(screen_onboarding_word_list_elements) /
-        sizeof(screen_onboarding_word_list_elements[0]);
+        ARRAYLEN(screen_onboarding_restore_word_select_elements);
     G_ux.stack[0].element_arrays_count = 1;
     G_ux.stack[0].screen_before_element_display_callback =
         screen_onboarding_restore_word_before_element_display_callback;
@@ -426,7 +423,7 @@ void screen_onboarding_restore_word_validate(void) {
 
     if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39) {
         if (G_bolos_ux_context.onboarding_step == G_bolos_ux_context.onboarding_kind) {
-            unsigned int valid;
+            unsigned char valid;
 
 #ifdef HAVE_ELECTRUM
             // if we've entered all the words, then check the phrase
@@ -574,24 +571,18 @@ unsigned int screen_onboarding_restore_word_select_button(unsigned int button_ma
     return 0;
 }
 
-void screen_onboarding_restore_word_init(unsigned int action) {
-    switch (action) {
-        case RESTORE_WORD_ACTION_FIRST_WORD:
-            // start by restore first word (+1 when displayed)
-            G_bolos_ux_context.onboarding_step = 0;
-            G_bolos_ux_context.sskr_share_index = 0;
+void screen_onboarding_restore_word_init(unsigned int firstWord) {
+    if (firstWord) {
+        // start by restore first word (+1 when displayed)
+        G_bolos_ux_context.onboarding_step = 0;
+        G_bolos_ux_context.sskr_share_index = 0;
 
-            // flush the words first
-            memzero(G_bolos_ux_context.words_buffer, G_bolos_ux_context.words_buffer_length);
-            G_bolos_ux_context.words_buffer_length = 0;
-            G_bolos_ux_context.sskr_words_buffer_length = 0;
-            break;
-
-        case RESTORE_WORD_ACTION_REENTER_WORD:
-            // don't change anything (the currently edited word has not been copied to the word
-            // buffer)
-            break;
+        // flush the words first
+        memzero(G_bolos_ux_context.words_buffer, G_bolos_ux_context.words_buffer_length);
+        G_bolos_ux_context.words_buffer_length = 0;
+        G_bolos_ux_context.sskr_words_buffer_length = 0;
     }
+
     memzero(G_ux.string_buffer, sizeof(G_ux.string_buffer));
     // offset 0: the display buffer for various placement
     // offset 16: the entered stem for the current word restoration

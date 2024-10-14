@@ -9,11 +9,12 @@
 
 ### In Progress
 
-- [ ] Decouple BAGL / NBGL code
 - [ ] Add BIP85 menus to Stax and Flex
+- [ ] Merge Nano code
 
 ### Done ✓
 
+- [x] Decouple BAGL / NBGL code
 - [x] Add Ledger Flex to list of devices app works on
 - [x] Add Ledger Stax to list of devices app works on
   - [x] Add SSKR Generate option to Stax

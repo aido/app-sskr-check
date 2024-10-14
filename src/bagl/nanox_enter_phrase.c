@@ -233,21 +233,22 @@ const bagl_element_t *screen_onboarding_restore_word_keyboard_callback(unsigned 
                     screen_onboarding_restore_word_display_auto_complete();
                 }
             } else {
-                unsigned int nb_words_matching_stem;
                 // validate next letter of the word
                 G_ux.string_buffer[16 + strlen(G_ux.string_buffer + 16)] =
                     G_ux.string_buffer[32 + G_bolos_ux_context.hslider3_current];
 
                 // continue displaying until less than X words matches the stem
-                nb_words_matching_stem = G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39
-                                             ? bolos_ux_bip39_get_word_count_starting_with(
-                                                   (unsigned char *) G_ux.string_buffer + 16,
-                                                   strlen(G_ux.string_buffer + 16))
-                                             : bolos_ux_sskr_get_word_count_starting_with(
-                                                   (unsigned char *) G_ux.string_buffer + 16,
-                                                   strlen(G_ux.string_buffer + 16));
+                G_bolos_ux_context.onboarding_words_checked =
+                    G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_BIP39
+                        ? bolos_ux_bip39_get_word_count_starting_with(
+                              (unsigned char *) G_ux.string_buffer + 16,
+                              strlen(G_ux.string_buffer + 16))
+                        : bolos_ux_sskr_get_word_count_starting_with(
+                              (unsigned char *) G_ux.string_buffer + 16,
+                              strlen(G_ux.string_buffer + 16));
 
-                if (nb_words_matching_stem > ONBOARDING_WORD_COMPLETION_MAX_ITEMS) {
+                if (G_bolos_ux_context.onboarding_words_checked >
+                    ONBOARDING_WORD_COMPLETION_MAX_ITEMS) {
                     // too much words for slider word completion, await another letter
                     screen_onboarding_restore_word_display_auto_complete();
                 } else {
@@ -265,7 +266,7 @@ const bagl_element_t *screen_onboarding_restore_word_keyboard_callback(unsigned 
                     // multiple possibilities
                     // update the slider's possible words
                     // account for the extra "last" (clear) item
-                    bolos_ux_hslider3_init(nb_words_matching_stem + 1);
+                    bolos_ux_hslider3_init(G_bolos_ux_context.onboarding_words_checked + 1);
                     screen_onboarding_restore_word_display_word_selection();
                 }
                 return NULL;
@@ -502,7 +503,7 @@ void screen_onboarding_restore_word_validate(void) {
             G_bolos_ux_context.words_buffer[G_bolos_ux_context.words_buffer_length++] = ' ';
 
             // enter the next word
-            screen_onboarding_restore_word_init(0);
+            screen_onboarding_restore_word_init(RESTORE_WORD_ACTION_REENTER_WORD);
         }
     } else if (G_bolos_ux_context.onboarding_type == ONBOARDING_TYPE_SSKR) {
         if (G_bolos_ux_context.onboarding_step == G_bolos_ux_context.onboarding_kind) {
@@ -512,7 +513,7 @@ void screen_onboarding_restore_word_validate(void) {
                 G_bolos_ux_context.onboarding_step = 0;
 
                 // enter the next word
-                screen_onboarding_restore_word_init(0);
+                screen_onboarding_restore_word_init(RESTORE_WORD_ACTION_REENTER_WORD);
             } else {
                 unsigned int valid;
                 valid =
@@ -536,7 +537,7 @@ void screen_onboarding_restore_word_validate(void) {
             }
         } else {
             // enter the next word
-            screen_onboarding_restore_word_init(0);
+            screen_onboarding_restore_word_init(RESTORE_WORD_ACTION_REENTER_WORD);
         }
     }
 }
@@ -570,7 +571,7 @@ unsigned int screen_onboarding_restore_word_select_button(unsigned int button_ma
         case BUTTON_EVT_RELEASED | BUTTON_LEFT | BUTTON_RIGHT:
             if (G_bolos_ux_context.hslider3_current == G_bolos_ux_context.hslider3_total - 1) {
                 // clear current word
-                screen_onboarding_restore_word_init(0);
+                screen_onboarding_restore_word_init(RESTORE_WORD_ACTION_REENTER_WORD);
             } else {
                 // confirm word, and prepare entering a new one or validate the seed
                 screen_onboarding_restore_word_validate();

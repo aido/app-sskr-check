@@ -50,8 +50,6 @@ ICON_FLEX   = glyphs/seed_flex_40px.gif
 
 ifneq ($(TARGET_NAME), $(filter $(TARGET_NAME), TARGET_STAX TARGET_FLEX))
     $(info Using BAGL)
-    DEFINES += HAVE_BAGL
-    DEFINES += BOLOS_APP_ICON_SIZE_B=\(9+32\)
     ifeq ($(TARGET_NAME),TARGET_NANOS)
         DISABLE_STANDARD_USB = 1
     endif

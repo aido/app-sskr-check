@@ -61,6 +61,7 @@ typedef struct bolos_ux_context {
     char words_buffer[WORDS_BUFFER_MAX_SIZE_B];
 
     // after an int to make sure it's aligned
+#define BOLOS_APP_ICON_SIZE_B (9 + 32)
     char string_buffer[MAX(
         64,
         sizeof(bagl_icon_details_t) + BOLOS_APP_ICON_SIZE_B - 1)];  // to store the seed wholly

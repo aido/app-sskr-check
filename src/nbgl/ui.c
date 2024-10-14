@@ -517,10 +517,12 @@ static void display_check_result_page(const bool result) {
          "on this " DEVICE ".",
          "The SSKR Recovery Phrase\nyou have entered\nmatches the one present\n"
          "on this " DEVICE "."}};
-    static const nbgl_icon_details_t *icons[2] = {&C_Warning_64px, &C_Check_Circle_64px};
+    static const nbgl_icon_details_t *icons[3] = {&C_Denied_Circle_64px,
+                                                  &C_Important_Circle_64px,
+                                                  &C_Check_Circle_64px};
 
     nbgl_pageInfoDescription_t info = {
-        .centeredInfo.icon = icons[result],
+        .centeredInfo.icon = icons[result + seed_match],
         .centeredInfo.text1 = possible_results[result][0],
         .centeredInfo.text2 = possible_results[result][1 + (onboarding_type * 2) + seed_match],
         .centeredInfo.text3 = NULL,

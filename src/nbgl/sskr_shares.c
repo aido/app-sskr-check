@@ -159,6 +159,7 @@ bool sskr_shares_complete_check(void) {
 }
 
 bool sskr_shares_check(bool* match) {
+    *match = false;
     if (!sskr_shares_complete_check()) {
         return false;
     }

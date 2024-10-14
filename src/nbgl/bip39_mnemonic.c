@@ -87,6 +87,7 @@ bool bip39_mnemonic_complete_check(void) {
 }
 
 bool bip39_mnemonic_check(bool* match) {
+    *match = false;
     if (!bip39_mnemonic_complete_check()) {
         return false;
     }
