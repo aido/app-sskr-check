@@ -18,4 +18,4 @@ jobs:
     name: Run Ledger rule enforcer using the reusable workflow
     uses: LedgerHQ/ledger-app-workflows/.github/workflows/reusable_guidelines_enforcer.yml@v1
     with:
-      run_for_devices: '["nanos", "nanox", "nanosp", "stax"]'
+      run_for_devices: '["nanos", "nanox", "nanosp", "stax", "flex"]'

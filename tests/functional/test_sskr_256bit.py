@@ -1,5 +1,6 @@
 from pytest import fixture
 from pytest import mark
+from pytest import skip
 from ragger.navigator import NavInsID
 from ragger.conftest import configuration
 
@@ -1220,4 +1221,12 @@ def nanos_sskr_256bit(backend, navigator):
 def test_sskr_256bit(firmware, backend, navigator, set_seed):
     if firmware.device == "nanos":
         nanos_sskr_256bit(backend, navigator)
+    elif firmware.device == "nanosp":
+        skip("Skipping test for Nano S+ device")
+    elif firmware.device == "nanox":
+        skip("Skipping test for Nano X device")
+    elif firmware.device == "stax":
+        skip("Skipping test for Stax device")
+    elif firmware.device == "flex":
+        skip("Skipping test for Flex device")
 
