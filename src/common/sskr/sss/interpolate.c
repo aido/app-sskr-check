@@ -39,7 +39,7 @@
  *                  The modulus must be an irreducible polynomial over GF(2)
  *                  of degree n.
  *
- * @param[in]  bn_h BN index of the second montgomery constant.
+ * @param[in]  bn_h BN index of the second Montgomery constant.
  *
  * @return          Error code:
  *                  - CX_OK on success
@@ -52,7 +52,7 @@ cx_err_t cx_bn_gf2_n_mul(cx_bn_t bn_r,
                          const cx_bn_t bn_b,
                          const cx_bn_t bn_n,
                          const cx_bn_t bn_h __attribute__((unused))) {
-    cx_err_t error = CX_OK;
+    cx_err_t error = CX_OK;  // By default, until some error occurs
     uint32_t degree, nbits_a, nbits_b;
 
     // Ensure bn_r is distinct from bn_a and bn_b
@@ -68,49 +68,49 @@ cx_err_t cx_bn_gf2_n_mul(cx_bn_t bn_r,
     CX_CHECK(cx_bn_cnt_bits(bn_a, &nbits_a));
     CX_CHECK(cx_bn_cnt_bits(bn_b, &nbits_b));
 
-    // Ensure both operands are in field
-    if (degree < 1 || nbits_a > degree || nbits_b > degree) {
+    // Ensure degree is valid and both operands are in field
+    if (degree < nbits_a || degree < nbits_b || degree < 1) {
         error = CX_INVALID_PARAMETER;
         goto end;
     }
 
-    // Preliminaries
-    cx_bn_t bn_tempa, bn_copy;
-    uint32_t bit_indexb = 0;
-    size_t nbytes;
-    bool bit_set = 0;
-
-    CX_CHECK(cx_bn_nbytes(bn_n, &nbytes));
-    CX_CHECK(cx_bn_alloc(&bn_tempa, nbytes));
-    CX_CHECK(cx_bn_alloc(&bn_copy, nbytes));
-
-    CX_CHECK(cx_bn_copy(bn_tempa, bn_a));
     CX_CHECK(cx_bn_set_u32(bn_r, (uint32_t) 0));
 
-    // Main loop for multiplication
-    if (nbits_a) {
-        while (nbits_b > bit_indexb) {
-            CX_CHECK(cx_bn_tst_bit(bn_b, bit_indexb, &bit_set));
+    // If either operand is zero then result is zero
+    if (nbits_a && nbits_b) {
+        // Preliminaries
+        cx_bn_t bn_temp, bn_copy;
+        uint32_t bit_index = 0;
+        size_t nbytes;
+        bool bit_set;
+
+        CX_CHECK(cx_bn_nbytes(bn_n, &nbytes));
+        CX_CHECK(cx_bn_alloc(&bn_temp, nbytes));
+        CX_CHECK(cx_bn_alloc(&bn_copy, nbytes));
+        CX_CHECK(cx_bn_copy(bn_temp, bn_a));
+
+        // Main loop for multiplication
+        do {
+            CX_CHECK(cx_bn_tst_bit(bn_b, bit_index++, &bit_set));
             if (bit_set) {
                 CX_CHECK(cx_bn_copy(bn_copy, bn_r));
-                CX_CHECK(cx_bn_xor(bn_r, bn_tempa, bn_copy));
+                CX_CHECK(cx_bn_xor(bn_r, bn_temp, bn_copy));
             }
 
-            CX_CHECK(cx_bn_shl(bn_tempa, 1));
-            CX_CHECK(cx_bn_tst_bit(bn_tempa, degree, &bit_set));
+            if (!--nbits_b) break;
 
-            if (bit_set) {
-                CX_CHECK(cx_bn_copy(bn_copy, bn_tempa));
-                CX_CHECK(cx_bn_xor(bn_tempa, bn_n, bn_copy));
+            CX_CHECK(cx_bn_shl(bn_temp, 1));
+            if (nbits_a++ == degree) {
+                CX_CHECK(cx_bn_copy(bn_copy, bn_temp));
+                CX_CHECK(cx_bn_xor(bn_temp, bn_n, bn_copy));
+                CX_CHECK(cx_bn_cnt_bits(bn_temp, &nbits_a));
             }
+        } while (nbits_a);
 
-            bit_indexb++;
-        }
+        // Clean up
+        CX_CHECK(cx_bn_destroy(&bn_temp));
+        CX_CHECK(cx_bn_destroy(&bn_copy));
     }
-
-    // Clean up
-    CX_CHECK(cx_bn_destroy(&bn_tempa));
-    CX_CHECK(cx_bn_destroy(&bn_copy));
 
 end:
     return error;
@@ -151,7 +151,7 @@ cx_err_t interpolate(uint8_t n,
         CX_CHECK(cx_bn_set_u32(bn_xc_i, (uint32_t) xi[i]));
         CX_CHECK(cx_bn_set_u32(bn_lagrange, (uint32_t) 1));
 
-        // calculate the lagrange basis coefficient for the lagrange polynomial
+        // calculate the Lagrange basis coefficient for the Lagrange polynomial
         // defined by the x coordinates xi at the value x.
         //
         // After loop runs, bn_lagrange should hold data satisfying
@@ -194,7 +194,7 @@ cx_err_t interpolate(uint8_t n,
                 // bn_tempb = denominator^254
                 CX_CHECK(cx_bn_gf2_n_mul(bn_tempb, bn_result, bn_tempc, bn_n, bn_r2));
 
-                // Calculate the lagrange basis coefficient
+                // Calculate the Lagrange basis coefficient
                 CX_CHECK(cx_bn_gf2_n_mul(bn_tempa, bn_numerator, bn_lagrange, bn_n, bn_r2));
                 CX_CHECK(cx_bn_gf2_n_mul(bn_lagrange, bn_tempa, bn_tempb, bn_n, bn_r2));
             }
