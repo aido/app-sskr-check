@@ -108,9 +108,30 @@ The Ledger application also provides an option to confirm the onboarded seed aga
 When the Shamir's secret shares have been validated the user can recover the BIP39 phrase derived from those shares. This option takes advantage of SSKR's ability to perform a BIP39 <-> SSKR round trip. If a user has lost or damaged their original Ledger device they may need to recover their BIP39 phrase on another secure device. A BIP39 phrase may still be recovered even if the SSKR phrases do not match the onboarded seed of a device but are still valid SSKR shares.
 
 ## Generate [BIP85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki)
-**Coming soon!!!!**
+BIP85 is a standard built on top of [BIP32](https://github.com/bitcoin/bips/blob/master/bip-0032.mediawiki) that enables the creation of child keys from a single parent seed. The protocol uses derivation paths to index the BIP85 child keys. This ensures that you will always get the same child key if you follow the same derivation path from the same parent seed.
 
-BIP85 allows you to do crazy stuff like this:
+The BIP85 standard describes several applications that use a fully hardened derivation path to create child keys supporting various formats such as BIP39, xprv, hex, base64 passwords, base85 passwords, dice rolls and more.
+
+> [!NOTE]
+> A more detailed description of the BIP85 standard may be found here:
+> [BIP85: Deterministic Entropy From BIP32 Keychains](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki)
+
+Due to the limitations of some of the older and smaller Ledger devices, not all BIP85 applications are supported by all devices. The following table lists the various BIP85 applications available on different Ledger devices:
+
+<div align="center">
+
+||Nano S|Nano S+|Nano X|Stax|Flex|
+| :--- | :---: | :---: | :---: | :---: | :---: |
+|[BIP39](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-BIP39)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[HEX](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-HEX)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[PWD BASE64](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE64)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[PWD BASE85](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-PWD_BASE85)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+|[DICE](https://github.com/bitcoin/bips/blob/master/bip-0085.mediawiki#user-content-DICE)|$${\color{red}✗}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|$${\color{orange}✓}$$|
+</div>
+
+> [!TIP]
+> Safely, securely and redundantly backup a parent root seed using Shamir's Secret Sharing. Use BIP85's BIP39 application to create several child wallets from that parent root seed. Further protect those child wallets using passwords generated using the BIP85 PWD BASE64 or PWD BASE85 applications. On Ledger devices those wallets can also then be protected by a PIN generated using the BIP85 DICE application.
+
 ```mermaid
 ---
 title: One Seed to rule them all - Multi wallet
